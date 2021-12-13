@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-100">
     <?php include 'partials/navbar.php' ?>
-    <div class="container mt-8 px-8">
+    <div class="min-h-screen mt-8 px-8">
         <p class="text-center text-4xl font-mono p-3">Bienvenido!</p>
         <div class="flex justify-center">
             <div class="bg-white p-16 rounded shadow-2xl w-2/3">

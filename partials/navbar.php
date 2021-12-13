@@ -12,14 +12,14 @@
 </style>
 <nav class="navbar navbar-expand-lg navbar-light bg-gray-200 border-b-2 border-red-100">
   <div class="container">
-    <a class="navbar-brand" href="#"><img src="images/logo.jpg" alt="asd" width="80" height="74"></a>
+    <a class="navbar-brand" href="#"><img src="../images/logo.jpg" alt="asd" width="80" height="74"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link font-sans" aria-current="page" href="#">Inicio</a>
+          <a class="nav-link font-sans" aria-current="page" href="index.php">Inicio</a>
         </li>
         <li class="nav-item">
           <a class="nav-link font-sans" href="#">Funcionamiento del centro</a>
@@ -46,13 +46,13 @@
           </ul>
         </li>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link font-sans" href="#">Iniciar sesion</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link font-sans" href="#">Registrarse</a>
-            </li>
-        </ul>
+        <li class="nav-item">
+          <a class="nav-link font-sans" href="login.php">Iniciar sesion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link font-sans" href="register.php">Registrarse</a>
+        </li>
+      </ul>
       </ul>
       <form class="d-flex mt-3">
         <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
