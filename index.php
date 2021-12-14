@@ -13,8 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style>
-    /* --- Aca inicia el carrousel --- */
-    
     /* --- Aca esta todo lo de la Api, el css que despues lo tengo que hacer con tailwind --- */
     #divContent{
         width: 307px;
@@ -44,6 +42,7 @@
         text-align: center;
         line-height: 50px;
     }
+    /* --- Aca comienza el css del footer --- */
 </style>
 </head>
 <body>
@@ -61,6 +60,8 @@
         <br/>
     </div>
     <!-- Termina el infinite scroll -->
+    <!-- Empieza el footer -->
+    <!-- Termina el footer -->
     <script>
         let divContent = document.getElementById('divContent');
         let listEnd = document.getElementById('listEnd');
@@ -138,5 +139,4 @@
         </div>
     </div>
     -->
-</body>
 </html>
