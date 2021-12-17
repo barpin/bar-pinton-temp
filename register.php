@@ -4,14 +4,22 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico">
 </head>
+<style>
+  body{
+    background-color: #a9c9ff;
+    background-image: linear-gradient(180deg, #a9c9ff 0%, #ffbbec 100%);
+    min-height: 100vh;
+  }
+</style>
 <body class="bg-gray-100">
   <?php include 'partials/navbar.php' ?>
     <div class="container">
-      <div class="login bg-red-100 mt-16 rounded-lg p-1 shadow-2xl"">
+      <div class="login bg-red-100 mt-56 rounded-lg p-1 shadow-2xl"">
         <div class="login-window rounded-lg bg-white p-2">
           <div class="espaciado p-8">
           <h2 class="text-3xl font-bold mb-4 text-gray-800">Registrate</h2>
@@ -41,8 +49,8 @@
           </div>
         </div>
         </div>
+        <?php include 'partials/footer.php' ?>
       </div>
     </div>
-    <?php include 'partials/footer.php' ?>
 </body>
 </html>

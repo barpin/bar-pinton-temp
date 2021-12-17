@@ -4,46 +4,40 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body>
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>¡Bienvenido a la pagina del centro de estudiantes!</title>
+    <link rel="shortcut icon" href="favicon.ico">
     <style>
-    /* --- Aca esta todo lo de la Api, el css que despues lo tengo que hacer con tailwind --- */
-    #divContent{
-        width: 307px;
-        display: block;
-        margin: 0 auto;
-        border: 2px solid black;
-        text-align: center;
-    }
-    #listEnd{
-        width: 400px;
-        display: block;
-        margin-left: auto;
-        margin-top: auto;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        border: 2px solid black;
-        text-align: center;
-    }
-    .item{
-        width: 300px;
-        height: 50px;
-        margin-left: auto;
-        margin-rigth: auto;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        border: 1px solid black;
-        text-align: center;
-        line-height: 50px;
-    }
-    /* --- Aca comienza el css del footer --- */
-</style>
+        /* --- Aca esta todo lo de la Api, el css que despues lo tengo que hacer con tailwind --- */
+        #divContent{
+            width: 307px;
+            display: block;
+            margin: 0 auto;
+            border: 2px solid black;
+            text-align: center;
+        }
+        #listEnd{
+            width: 400px;
+            display: block;
+            margin-left: auto;
+            margin-top: auto;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border: 2px solid black;
+            text-align: center;
+        }
+        .item{
+            width: 300px;
+            height: 50px;
+            margin-left: auto;
+            margin-rigth: auto;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border: 1px solid black;
+            text-align: center;
+            line-height: 50px;
+        }
+        /* --- Aca comienza el css del footer --- */
+    </style>
 </head>
 <body>
     <?php include_once 'partials/navbar.php' ?>
