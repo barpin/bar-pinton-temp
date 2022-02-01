@@ -1,7 +1,7 @@
 const cols = 3;
 const sliderWrapper = document.getElementById('sliderWrapper');
 let parts = [];
-let images = ['../images/asd1.jpg', '../images/asd2.jpg'];
+let images = ['../img/asd1.jpg', '../img/asd2.jpg'];
 let current = 0;
 
 // Agrega las iamgenes al html
