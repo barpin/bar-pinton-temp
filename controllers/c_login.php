@@ -17,7 +17,7 @@ if (isset($_SESSION["id"])){
 	if (isset($url)){
 		header('Location: '.$url);
 	} else {
-		header('Location: index.php');
+		header('Location: /');
 	}
 	exit;
 }
@@ -47,7 +47,7 @@ if (isset($_POST['loguearse'])){
 				if (isset($url)){
 					header('Location: '.$url);
 				} else {
-					header('Location: index.php');
+					header('Location: /');
 
 				}
 

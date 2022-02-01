@@ -42,12 +42,18 @@
             <li><a class="dropdown-item font-sans" href="#">Secretaria del turno noche</a></li>
           </ul>
         </li>
+      <?php if (!$loggedin){ ?>
       <li class="nav-item">
-        <a class="nav-link font-sans" href="login.php">Iniciar sesion</a>
+        <a class="nav-link font-sans" href="/login">Iniciar sesion</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link font-sans" href="register.php">Registrarse</a>
+        <a class="nav-link font-sans" href="/registrar">Registrarse</a>
       </li>
+      <?php } else { ?>
+        <li class="nav-item">
+          <a class="nav-link font-sans" href="/logout">Cerrar sesion</a>
+        </li>
+      <?php } ?>
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
