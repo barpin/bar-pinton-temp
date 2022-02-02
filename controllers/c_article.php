@@ -2,14 +2,7 @@
 //$url = strpos($_SERVER['REQUEST_URI'], "?")===false ? $_SERVER['REQUEST_URI'] :  strstr($_SERVER['REQUEST_URI'],"?",true);
 require_once 'assets/database.php';
 
-function getcols($link){
-    $colstr="";
-    $query="select concat('posts.', column_name, ' as p_', column_name, ', ') AS cols from Information_Schema.columns c where table_name = 'posts' UNION ALL select concat('textupdates.', column_name, ' as t_', column_name, ', ') AS cols from Information_Schema.columns c where table_name = 'textupdates'";
-    foreach (entries($link, $query, true) as $scstr ){
-        $colstr.=$scstr[0];
-    }
-    return rtrim($colstr, ", ");
-}
+
 $cols=getcols($link);
 $query="SELECT ${cols} FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id ";
 if (isset($version)){
@@ -21,6 +14,8 @@ if (isset($version)){
 
 $result=qq($link, $query);
 if ( !$result->num_rows == 1){
+    $_SESSION["msg"]="Este post no se encontro (o se encontro mas de 1). Asegurese de que tenga un texto relacionado"; // El usuario y/o contraseña esta mal
+    $_SESSION["icon"]="error";
     header('Location: /404');
     //echo $query;
     //exit();
@@ -28,7 +23,7 @@ if ( !$result->num_rows == 1){
 $content = $result->fetch_assoc(); 
 $title = $content['p_title'];    
 
-$headertags="<style>${content['t_css']}</style>";
+$headertags="";
 
 require_once 'assets/session_start.php';
 

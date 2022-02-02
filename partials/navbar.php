@@ -11,35 +11,40 @@
             Informacion
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item font-sans" href="/info">Que es el centro?</a></li>
+            <li><a class="dropdown-item font-sans" href="/participacion">Participacion</a></li>
             <li><a class="dropdown-item font-sans" href="/funcionamiento">Funcionamiento del centro</a></li>
             <li><a class="dropdown-item font-sans" href="/estatuto">Estatuto</a></li>
             <li><a class="dropdown-item font-sans" href="/sitio">Informacion del Sitio</a></li>
             <li><a class="dropdown-item font-sans" href="/noticias">Noticias</a></li>
             <li><a class="dropdown-item font-sans" href="/contacto">Contacto</a></li>
             <li><a class="dropdown-item font-sans" href="/miembros">Miembros</a></li>
+            <li><a class="dropdown-item font-sans" href="/reuniones">Reuniones de Delegados</a></li>
+            <li><a class="dropdown-item font-sans" href="/transparencia">Transparencia</a></li>
             <li><a class="dropdown-item font-sans" href="/docs">Informacion Tecnica</a></li>
 
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link font-sans" href="comisiones.php">Comisiones</a>
+          <a class="nav-link font-sans" href="/comisiones">Comisiones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link font-sans" href="clubes.php">Clubes</a>
+          <a class="nav-link font-sans" href="/clubes">Clubes</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Secretarias
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item font-sans" href="#">Secretaria de asuntos internos</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Secretaria de finanzas</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Secretaria de género</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Secretaria de cultura</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Secretaria de nota y asuntos estudiantiles</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Secretaria de asuntos edilicios</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Secretaria de prensa y difusión</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Secretaria del turno noche</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretarias">Secretarias</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretaria/internos">Secretaria de asuntos internos</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretaria/finanzas">Secretaria de finanzas</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretaria/genero">Secretaria de género</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretaria/cultura">Secretaria de cultura</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretaria/estudiantiles">Secretaria de nota y asuntos estudiantiles</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretaria/edilicios">Secretaria de asuntos edilicios</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretaria/prensa">Secretaria de prensa y difusión</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretaria/noche">Secretaria del turno noche</a></li>
           </ul>
         </li>
       <?php if (!$loggedin){ ?>

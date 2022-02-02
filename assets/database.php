@@ -26,3 +26,12 @@ function entries ($link, $query, $fetchrow = false){
 function sanitize ($text, $link){
     return mysqli_real_escape_string($link, htmlspecialchars($text));
 }
+
+function getcols($link){
+    $colstr="";
+    $query="select concat('posts.', column_name, ' as p_', column_name, ', ') AS cols from Information_Schema.columns c where table_name = 'posts' UNION ALL select concat('textupdates.', column_name, ' as t_', column_name, ', ') AS cols from Information_Schema.columns c where table_name = 'textupdates'";
+    foreach (entries($link, $query, true) as $scstr ){
+        $colstr.=$scstr[0];
+    }
+    return rtrim($colstr, ", ");
+}

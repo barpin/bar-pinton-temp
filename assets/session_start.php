@@ -14,7 +14,7 @@ if (isset($_SESSION["msg"])){
 					confirmButtonColor: "#34a34e",
 					timerProgressBar: true,
 					backdrop: true,
-					timer: 2000
+					//timer: 5000
 				});
 			}, 0.01);
 		}
