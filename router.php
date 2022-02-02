@@ -2,23 +2,23 @@
 
 session_start();
 
-function get($route, $path_to_include){
-  if( $_SERVER['REQUEST_METHOD'] == 'GET' ){ route($route, $path_to_include); }  
+function get($route, $path_to_include, $variables=[]){
+  if( $_SERVER['REQUEST_METHOD'] == 'GET' ){ route($route, $path_to_include, $variables); }  
 }
-function post($route, $path_to_include){
-  if( $_SERVER['REQUEST_METHOD'] == 'POST' ){ route($route, $path_to_include); }    
+function post($route, $path_to_include, $variables=[]){
+  if( $_SERVER['REQUEST_METHOD'] == 'POST' ){ route($route, $path_to_include, $variables); }    
 }
-function put($route, $path_to_include){
-  if( $_SERVER['REQUEST_METHOD'] == 'PUT' ){ route($route, $path_to_include); }    
+function put($route, $path_to_include, $variables=[]){
+  if( $_SERVER['REQUEST_METHOD'] == 'PUT' ){ route($route, $path_to_include, $variables); }    
 }
-function patch($route, $path_to_include){
-  if( $_SERVER['REQUEST_METHOD'] == 'PATCH' ){ route($route, $path_to_include); }    
+function patch($route, $path_to_include, $variables=[]){
+  if( $_SERVER['REQUEST_METHOD'] == 'PATCH' ){ route($route, $path_to_include, $variables); }    
 }
-function delete($route, $path_to_include){
-  if( $_SERVER['REQUEST_METHOD'] == 'DELETE' ){ route($route, $path_to_include); }    
+function delete($route, $path_to_include, $variables=[]){
+  if( $_SERVER['REQUEST_METHOD'] == 'DELETE' ){ route($route, $path_to_include, $variables); }    
 }
-function any($route, $path_to_include){ route($route, $path_to_include); }
-function route($route, $path_to_include){
+function any($route, $path_to_include, $variables=[]){ route($route, $path_to_include, $variables); }
+function route($route, $path_to_include, $variables=[]){
   $ROOT = $_SERVER['DOCUMENT_ROOT'];
   if($route == "/404"){
     include_once("$ROOT/$path_to_include");
@@ -31,6 +31,9 @@ function route($route, $path_to_include){
   $request_url_parts = explode('/', $request_url);
   array_shift($route_parts);
   array_shift($request_url_parts);
+  foreach($variables as $varname=>$varval){
+    $$varname=$varval;
+  }
   if( $route_parts[0] == '' && count($request_url_parts) == 0 ){
     include_once("$ROOT/$path_to_include");
     exit();

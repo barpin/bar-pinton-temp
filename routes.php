@@ -42,26 +42,39 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/router.php");
 // The 404.php has access to $_GET and $_POST
 
 any('/', 'controllers/c_index.php');
-any('/secretaria/$feedname', 'controllers/c_feed.php');
-any('/comision/$feedname', 'controllers/c_feed.php');
-any('/club/$feedname', 'controllers/c_feed.php');
-any('/votos/$feedname', 'controllers/c_feed.php');
-any('/noticias', 'controllers/c_feed.php');
-any('/funcionamiento', 'controllers/c_article.php');
-any('/contacto', 'controllers/c_article.php');
-any('/miembros', 'controllers/c_article.php');
-any('/estatuto', 'controllers/c_article.php');
-any('/articulo/$article', 'controllers/c_article.php');
-any('/login', 'controllers/c_login.php');
-any('/logout', 'controllers/c_logout.php');
-any('/registrar', 'controllers/c_register.php');
-any('/busqueda', 'controllers/c_search.php');
+
+any('/secretaria/$feedname', 'controllers/c_feed.php', ['allow'=>2**6]);
+any('/comision/$feedname',   'controllers/c_feed.php', ['allow'=>2**7]);
+any('/club/$feedname',       'controllers/c_feed.php', ['allow'=>2**8]);
+any('/votos',                'controllers/c_feed.php', ['feedid'=>true]);
+any('/noticias',             'controllers/c_feed.php');
+any('/archivo',              'controllers/c_feed.php', ['archive'=>true]);
+any('/archivo/$feedid',      'controllers/c_feed.php', ['archive'=>true]);
+any('/comisiones',           'controllers/c_feed.php');
+any('/clubes',               'controllers/c_feed.php');
+any('/secretarias',          'controllers/c_feed.php');
+
+
+any('/funcionamiento',                      'controllers/c_article.php', ['article'=>2]);
+any('/estatuto',                            'controllers/c_article.php', ['article'=>5]);
+any('/sitio',                               'controllers/c_article.php', ['article'=>6]);
+any('/contacto',                            'controllers/c_article.php', ['article'=>3]);
+any('/miembros',                            'controllers/c_article.php', ['article'=>4]);
+any('/docs',                                'controllers/c_article.php', ['article'=>7]);
+any('/articulo/$article',                   'controllers/c_article.php');
+any('/articulo/$article/historia/$version', 'controllers/c_article.php');
+
+
+any('/login',           'controllers/c_login.php');
+any('/logout',          'controllers/c_logout.php');
+any('/registrar',       'controllers/c_register.php');
+any('/busqueda',        'controllers/c_search.php');
 any('/editar/$article', 'controllers/c_edit.php');
-any('/api', 'controllers/c_api.php');
-any('/rss', 'controllers/c_rss.php');
-any('/admin', 'controllers/c_admin.php');
+any('/api',             'controllers/c_api.php');
+any('/rss',             'controllers/c_rss.php');
+any('/admin',           'controllers/c_admin.php');
 
 
 
     
-any('/404','views/404.php');
+any('/404','controllers/c_404.php');

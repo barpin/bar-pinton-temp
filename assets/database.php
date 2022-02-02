@@ -14,10 +14,10 @@ function qq ($link, $query){
     return $tres;
 }
 
-function entries ($link, $query){
+function entries ($link, $query, $fetchrow = false){
     $entries=qq($link, $query);
     $entryarr=[];
-    while($row=$entries->fetch_assoc()){
+    while($row= $fetchrow ? $entries->fetch_row() : $entries->fetch_assoc()){
         $entryarr[]=$row;
     }
     return $entryarr;

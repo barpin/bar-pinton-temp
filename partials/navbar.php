@@ -11,13 +11,13 @@
             Informacion
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item font-sans" href="funcionamientodelcentro.php">Funcionamiento del centro</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Estatuto</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Informacion del Sitio</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Noticias</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Contacto</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Miembros</a></li>
-            <li><a class="dropdown-item font-sans" href="#">Informacion Tecnica</a></li>
+            <li><a class="dropdown-item font-sans" href="/funcionamiento">Funcionamiento del centro</a></li>
+            <li><a class="dropdown-item font-sans" href="/estatuto">Estatuto</a></li>
+            <li><a class="dropdown-item font-sans" href="/sitio">Informacion del Sitio</a></li>
+            <li><a class="dropdown-item font-sans" href="/noticias">Noticias</a></li>
+            <li><a class="dropdown-item font-sans" href="/contacto">Contacto</a></li>
+            <li><a class="dropdown-item font-sans" href="/miembros">Miembros</a></li>
+            <li><a class="dropdown-item font-sans" href="/docs">Informacion Tecnica</a></li>
 
           </ul>
         </li>
