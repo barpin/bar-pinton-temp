@@ -18,3 +18,4 @@
     </div>
     <?php } ?>
 </div>
+<?= $staticcategory ?>

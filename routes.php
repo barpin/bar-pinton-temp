@@ -40,18 +40,17 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/router.php");
 // For GET or POST
 // The 404.php which is inside the views folder will be called
 // The 404.php has access to $_GET and $_POST
-
 any('/', 'controllers/c_index.php');
 
-any('/secretaria/$feedname', 'controllers/c_feed.php', ['allow'=>1]);
-any('/comision/$feedname',   'controllers/c_feed.php', ['allow'=>2]);
-any('/club/$feedname',       'controllers/c_feed.php', ['allow'=>3]);
+any('/secretaria/$feedname', 'controllers/c_feed.php', ['allow'=>64]);
+any('/comision/$feedname',   'controllers/c_feed.php', ['allow'=>128]);
+any('/club/$feedname',       'controllers/c_feed.php', ['allow'=>256]);
 any('/votos',                'controllers/c_feed.php', ['feedid'=>4]);
 any('/noticias',             'controllers/c_feed.php', ['feedid'=>1]);
 any('/archivo/$feedid',      'controllers/c_feed.php', ['archive'=>true]);
 any('/comisiones',           'controllers/c_feed.php', ['feedid'=>7]);
 any('/clubes',               'controllers/c_feed.php', ['feedid'=>8]);
-any('/secretarias',          'controllers/c_feed.php', ['feedid'=>9]);
+any('/secretarias',          'controllers/c_feed.php', ['feedid'=>6]);
 
 
 any('/funcionamiento',                      'controllers/c_article.php', ['article'=>2]);
@@ -72,7 +71,7 @@ any('/login',           'controllers/c_login.php');
 any('/logout',          'controllers/c_logout.php');
 any('/registrar',       'controllers/c_register.php');
 any('/busqueda',        'controllers/c_search.php');
-any('/editar', 'controllers/c_edit.php');
+any('/editar',          'controllers/c_edit.php');
 any('/editar/$article', 'controllers/c_edit.php');
 any('/api',             'controllers/c_api.php');
 any('/rss',             'controllers/c_rss.php');
@@ -82,3 +81,6 @@ any('/admin',           'controllers/c_admin.php');
 
     
 any('/404','controllers/c_404.php');
+
+
+

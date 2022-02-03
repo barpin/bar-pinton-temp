@@ -53,7 +53,8 @@ if(isset($_POST['register'])){
 				$_SESSION["msg"]="Cuenta creada con exito!";
 				$_SESSION["icon"]="success";
 				$_SESSION["id"]=$assoc['id'];
-				if (isset($url)){
+			    $_SESSION["perms"]=$assoc["perms"];
+			   if (isset($url)){
 					header('Location: '.$url);
 				} else {
 					header('Location: /');

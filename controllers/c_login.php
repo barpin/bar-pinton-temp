@@ -22,13 +22,15 @@ if (isset($_SESSION["id"])){
 	exit;
 }
 
-if (isset($_POST['loguearse'])){
+
+
+if (isset($_POST['login'])){
 	if(!empty($_POST['email']) && !empty($_POST['pass'])){
         $parr = [
             "email"=>sanitize($_POST['email'], $link),
             "pass"=>sanitize($_POST['pass'], $link),
         ];
-		$sqlquery= "select * from users where users.email = ${parr['email']} ";
+		$sqlquery= "select * from users where users.email = '${parr['email']}' ";
 		$result=qq($link, $sqlquery);
 		
 		if (mysqli_num_rows($result) == 0) { 
@@ -40,10 +42,12 @@ if (isset($_POST['loguearse'])){
 			   session_unset();
 			   session_destroy();
 			   session_start();
-			   $_SESSION["user"]=$assoc['nick'] ?? $assoc['name'];
+			   $_SESSION["user"]= $assoc['nick'] ?? $assoc['name'];
 			   $_SESSION["msg"]="Te logueaste correctamente!";
 			   $_SESSION["icon"]="success";
 			   $_SESSION["id"]=$assoc["id"];
+			   $_SESSION["perms"]=$assoc["perms"];
+			   //var_dump($assoc);exit();
 				if (isset($url)){
 					header('Location: '.$url);
 				} else {
@@ -65,7 +69,6 @@ if (isset($_POST['loguearse'])){
 		$_SESSION["icon"]="error";
 	}
 }
-
 require 'assets/session_start.php';
 
 require_once 'partials/documenthead.php';

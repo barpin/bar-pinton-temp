@@ -5,6 +5,7 @@ if (!isset($_SESSION)){
 $loggedin=isset($_SESSION["user"]) ? 1 : 0; 
 if (isset($_SESSION["msg"])){
 	?>
+	
     <script>
 		function showErrMsg(){
 			setTimeout(function() {
@@ -21,6 +22,7 @@ if (isset($_SESSION["msg"])){
 		window.onload=showErrMsg;
 	</script>
     <?php
+	$sessionmessage=$_SESSION["msg"];
 	$_SESSION["msg"]=null;
 }
 ?>

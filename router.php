@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+function prdebug(){echo "<br><br><pre>";var_dump($_SESSION);echo "</pre><br><br><pre>";var_dump($_POST);}
 function get($route, $path_to_include, $variables=[]){
   if( $_SERVER['REQUEST_METHOD'] == 'GET' ){ route($route, $path_to_include, $variables); }  
 }
@@ -22,6 +22,7 @@ function route($route, $path_to_include, $variables=[]){
   $ROOT = $_SERVER['DOCUMENT_ROOT'];
   if($route == "/404"){
     include_once("$ROOT/$path_to_include");
+    prdebug();
     exit();
   }  
   $request_url = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
@@ -36,6 +37,7 @@ function route($route, $path_to_include, $variables=[]){
   }
   if( $route_parts[0] == '' && count($request_url_parts) == 0 ){
     include_once("$ROOT/$path_to_include");
+    prdebug();
     exit();
   }
   if( count($route_parts) != count($request_url_parts) ){ return; }  
@@ -52,6 +54,7 @@ function route($route, $path_to_include, $variables=[]){
     } 
   }
   include_once("$ROOT/$path_to_include");
+  prdebug();
   exit();
 }
 function out($text){echo htmlspecialchars($text);}
@@ -63,4 +66,5 @@ function is_csrf_valid(){
   if( ! isset($_SESSION['csrf']) || ! isset($_POST['csrf'])){ return false; }
   if( $_SESSION['csrf'] != $_POST['csrf']){ return false; }
   return true;
+  
 }
