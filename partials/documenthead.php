@@ -24,7 +24,7 @@
         if (isset ($jsvars)){
             foreach($jsvars as $varname=>$varval){
                 ?>
-        var <?= $varname ?> = <?= is_numeric($varval) ? $varval : ( is_array($varval) ? '"'.addslashes(json_encode($varval)).'"' : '"'.$varval.'"' ) ?>;
+        var <?= $varname ?> = <?= is_numeric($varval) ? $varval : ( is_array($varval) ? '`'.str_replace("`", "\`",addslashes(json_encode($varval))).'`' : '`'.str_replace("`", "\`",addslashes($varval)).'`' ) ?>;
                 <?php
             }
         }
