@@ -1,4 +1,5 @@
 <?php
+header("HTTP/1.0 404 Not Found");
 $title="Error 404";
 //$headertags='<link href="/css/apithing.css" rel="stylesheet">';
 

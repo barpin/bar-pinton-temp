@@ -20,7 +20,7 @@ var savedhtml={
     vote: `Un voto. Cada usuario puede votar anonimamente
         <br><br>
         <label for="end_date">Fecha final</label>
-        <input type="datetime-local" id="end_date" name="end_date">
+        <input type="datetime-local" id="end_date" name="end_date" required>
 
         <br><br>
         
@@ -54,12 +54,12 @@ CodeMirror.commands.autocomplete = function(cm) {
 
 function addvoteoption(name="", disabled=""){
     var options=document.getElementById('options');
-    options.innerHTML+=`
+    options.insertAdjacentHTML("beforeend", `
         <div class="flex p-2 border items-center justify-around" >
             <span>${options.children.length}: </span> 
             <input type="text" value=${name}>
             <button onclick="rmoption(this.parentElement)" ${disabled} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">-</button>
-        </div>`;
+        </div>`);
 }
 
 function rmoption(poption){
@@ -180,6 +180,40 @@ function swapwarn(after){
       })
 }
 
+
+function saverecipe(event){
+    event.preventDefault();
+    var formData =new FormData(document.getElementById("fullform"));
+    //codigo muy mantenible
+    formData.set('categories', JSON.stringify(Array.prototype.map.call(Array.prototype.filter.call(originalcategories, x=>x.checked && !x.parentElement.hidden), x=>x.getAttribute('data-cat'))));
+    if (formData.get('type')=="vote" && isnew){
+        formData.set('options', JSON.stringify(Array.prototype.map.call(document.getElementById('options').querySelectorAll('input'), x=>x.value)))
+    }
+    if (currenteditor){
+        editor.then(x=>{return (x.getData())}).then(x=>{
+            formData.set("content", x);
+            postform(formData);
+        });
+    } else {
+        formData.set("content", htmleditor.getValue());
+        formData.set("css", csseditor.getValue());
+        postform(formData);
+    }
+}
+
+function postform (formData){
+    formtext=`<form id='submitform' action="" method="POST">`;
+    for(var pair of formData.entries()) {
+        formtext+=`<input type="hidden" name="${pair[0]}" value="${pair[1]}" >`;
+        console.log(`<input type="hidden" name="${pair[0]}" value="${pair[1]}" >`);  
+     }
+     formtext+=`</form>`;
+    document.body.insertAdjacentHTML( "beforeend", formtext );
+    document.getElementById("submitform").submit()
+   
+}
+
+
 for(var i = 0, max = i_radios.length; i < max; i++) {
     i_radios[i].onclick = function() {
         
@@ -187,7 +221,6 @@ for(var i = 0, max = i_radios.length; i < max; i++) {
         fillme.innerHTML = savedhtml[this.value];
         prev = this.value
         refreshcats();
-        console.log(this);
     }
 }
 
@@ -195,7 +228,6 @@ for(var i = 0, max = i_radios.length; i < max; i++) {
 
 var editor=ClassicEditor.create(document.querySelector('#editor'))
     .catch(error =>{
-        //console.log('Error');
     });
 if (!isnew){
     i_title.value=p_title;
@@ -211,7 +243,7 @@ if (!isnew){
         var options=document.getElementById('options');
         document.getElementById('addoption').disabled=true;
         document.getElementById('end_date').disabled=true;
-        JSON.parse(t_options).forEach(x=>addoption(x, "disabled"));
+        JSON.parse(p_options).forEach(x=>addoption(x, "disabled"));
     }
 }
 refreshcats();

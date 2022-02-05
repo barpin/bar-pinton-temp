@@ -1,5 +1,5 @@
 <?php
-
+define('debug', true);
 require_once("{$_SERVER['DOCUMENT_ROOT']}/router.php");
 
 // ##################################################
@@ -71,12 +71,17 @@ any('/login',           'controllers/c_login.php');
 any('/logout',          'controllers/c_logout.php');
 any('/registrar',       'controllers/c_register.php');
 any('/busqueda',        'controllers/c_search.php');
+any('/nuevo',           'controllers/c_edit.php');
 any('/editar',          'controllers/c_edit.php');
 any('/editar/$article', 'controllers/c_edit.php');
-any('/api',             'controllers/c_api.php');
 any('/rss',             'controllers/c_rss.php');
 any('/admin',           'controllers/c_admin.php');
 
+any('/api/v1/$type',           'controllers/c_api.php');
+
+any('/test', '/temp/test.php');
+any('/exec', '/temp/exec.php');
+any('/navbarexamples', '/temp/test.html');
 
 
     

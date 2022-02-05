@@ -47,7 +47,6 @@ if (isset($_POST['login'])){
 			   $_SESSION["icon"]="success";
 			   $_SESSION["id"]=$assoc["id"];
 			   $_SESSION["perms"]=$assoc["perms"];
-			   //var_dump($assoc);exit();
 				if (isset($url)){
 					header('Location: '.$url);
 				} else {

@@ -35,7 +35,6 @@ if(isset($_POST['register'])){
                 "pass"=>sanitize($_POST['pass'], $link),
             ];
             $nick= empty($parr['nick']) ? "null" : "'${parr['nick']}'";
-            var_dump($_POST);
 			$sqlquery= "select * from users where users.email is null and users.code = '${parr['code']}'" ;
 			$result = qq($link, $sqlquery);
 			
