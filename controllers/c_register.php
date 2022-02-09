@@ -29,10 +29,10 @@ if(isset($_POST['register'])){
 	if(!empty($_POST['pass']) && !empty($_POST['cpass']) && !empty($_POST['email']) && !empty($_POST['code'])){
 		if ($_POST['pass']==$_POST['cpass']){
             $parr = [
-                "email"=>sanitize($_POST['email'], $link),
-                "nick"=>sanitize($_POST['nick'], $link),
-                "code"=>sanitize($_POST['code'], $link),
-                "pass"=>sanitize($_POST['pass'], $link),
+                "email"=>sanitize($link, $_POST['email']),
+                "nick"=>sanitize($link, $_POST['nick']),
+                "code"=>sanitize($link, $_POST['code']),
+                "pass"=>sanitize($link, $_POST['pass']),
             ];
             $nick= empty($parr['nick']) ? "null" : "'${parr['nick']}'";
 			$sqlquery= "select * from users where users.email is null and users.code = '${parr['code']}'" ;

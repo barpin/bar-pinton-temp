@@ -1,7 +1,7 @@
 
 <div class="formbox border">
 	<form onsubmit="return saverecipe(event)" id="fullform" >
-		<input name="title" type="text" maxlength="128" placeholder="Titulo" required class="w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-red-100">
+		<input <?= $new ? 'name="title"' : '' ?> type="text" maxlength="128" placeholder="Titulo" required class="w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-red-100">
 		<br><br>
 		<div id="categories" class="border p-6 flex flex-wrap">
 			<div id="parentcats" class="flex"></div>
@@ -24,7 +24,7 @@
 		<br><br>
 		
 		<textarea id="text-area" style="display:none;"></textarea>
-		<?php if (isset($article)){ ?>
+		<?php if (!$new){ ?>
 			<input id='id' name='id' type='hidden' value='<?php echo $article; ?>'>
 		<?php }  ?>
 	

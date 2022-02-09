@@ -1,6 +1,13 @@
 <?php
 //returns post information
+
 $cols=getcols($link);
-$query="SELECT ${cols} FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id WHERE textupdates.replaced_at IS NULL AND posts.id = ${post} ";
-$articledata=qq($link, $query)->fetch_assoc();
+$post = getpost("post");
+$query="";
+if (count($postlist = explode(",",$post))){
+    for ($i=0;$i<count($postlist);$i++){
+        $query.=" ${posts_data_query} WHERE posts.id = ${postlist[$i]} ".($i==count($postlist)-1 ? "" : "UNION ALL");
+    }
+} 
+$articledata=entries($link, $query);
 echo json_encode($articledata);

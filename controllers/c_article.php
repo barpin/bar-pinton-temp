@@ -4,7 +4,7 @@ require_once 'assets/database.php';
 
 
 $cols=getcols($link);
-$query="SELECT ${cols} FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id ";
+$query=$posts_data_query;
 if (isset($version)){
     $query.="WHERE textupdates.id = ${version}";
 } else {

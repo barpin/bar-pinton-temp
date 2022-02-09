@@ -202,15 +202,51 @@ function saverecipe(event){
 }
 
 function postform (formData){
-    formtext=`<form id='submitform' action="" method="POST">`;
-    for(var pair of formData.entries()) {
-        formtext+=`<input type="hidden" name="${pair[0]}" value="${pair[1]}" >`;
-        console.log(`<input type="hidden" name="${pair[0]}" value="${pair[1]}" >`);  
-     }
-     formtext+=`</form>`;
-    document.body.insertAdjacentHTML( "beforeend", formtext );
-    document.getElementById("submitform").submit()
-   
+    //formtext=`<form id='submitform' action="" method="POST">`;
+    //for(var pair of formData.entries()) {
+    //    console.log(pair);
+    //    formtext+=`<input type="hidden" name="${pair[0]}" value="${pair[1]}" >`;
+    //    console.log(`<input type="hidden" name="${pair[0]}" value="${pair[1]}" >`);  
+    // }
+    // formtext+=`</form>`;
+    //document.body.insertAdjacentHTML( "beforeend", formtext );
+    //document.getElementById("submitform").submit()
+
+    fetch("/api/v1/edit", {
+        method:"POST",
+        body:formData,
+        credentials: 'same-origin', 
+        mode: 'same-origin',
+        cache: 'no-cache',
+    })
+    .then(CheckError)
+    .then((jsonResponse) => {
+        Swal.fire({
+            title: 'El post se ha creado/editado correctamente',
+            icon: 'success',
+          }).then((jsonResponse) => {
+              console.log(jsonResponse);
+            //window.location.reload(true);
+          });
+    }).catch((error) => {
+        console.log(error);
+        Swal.fire({
+            title: 'El post no se ha creado/editado',
+            icon: 'error',
+            text: error,
+            showCancelButton: true,
+            confirmButtonText: 'Reintentar',
+
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                postform (formData);
+            }   
+        });
+    });
+  
+
+    
 }
 
 

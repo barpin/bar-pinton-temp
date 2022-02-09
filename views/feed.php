@@ -18,4 +18,4 @@
     </div>
     <?php } ?>
 </div>
-<?= $staticcategory ?>
+<?= $staticcategory //numero de la categoria ?>

@@ -27,8 +27,8 @@ if (isset($_SESSION["id"])){
 if (isset($_POST['login'])){
 	if(!empty($_POST['email']) && !empty($_POST['pass'])){
         $parr = [
-            "email"=>sanitize($_POST['email'], $link),
-            "pass"=>sanitize($_POST['pass'], $link),
+            "email"=>sanitize($link, $_POST['email']),
+            "pass"=>sanitize($link, $_POST['pass']),
         ];
 		$sqlquery= "select * from users where users.email = '${parr['email']}' ";
 		$result=qq($link, $sqlquery);

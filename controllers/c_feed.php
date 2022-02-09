@@ -29,7 +29,7 @@ $staticcategory = $category+2**2+$categoryassoc['parents'];
 $notcategory = 2**2+2**5;
 $votecategory = $category+2**4;    
 $alertcategory = $category+2**5;
-$query="SELECT ${cols} FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id  WHERE textupdates.replaced_at IS NULL AND posts.category ";
+$query=$posts_data_query."WHERE textupdates.replaced_at IS NULL AND posts.category ";
 $result=qq($link, $query."= ${staticcategory}");
 $content = $result->fetch_assoc();    
 

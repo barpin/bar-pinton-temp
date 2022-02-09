@@ -37,7 +37,7 @@ if (!$loggedin){
 
 if (isset($article)){
     $cols=getcols($link);
-    $query="SELECT ${cols} FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id WHERE textupdates.replaced_at IS NULL AND posts.id = ${article} ";
+    $query= $posts_data_query."WHERE textupdates.replaced_at IS NULL AND posts.id = ${article} ";
     $articledata=qq($link, $query)->fetch_assoc();
     $jsvars = array_merge($articledata, ['isnew'=>0]); 
     $new=0;

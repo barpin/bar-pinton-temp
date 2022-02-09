@@ -9,8 +9,15 @@ if(!$link){
     exit();
 }
 
-function qq ($link, $query){
-    if(!($tres = mysqli_query($link, $query))){exit(mysqli_error($link)." , in query ".$query);}
+function qq ($link, $query, $exitCode=false){
+    if(!($tres = mysqli_query($link, $query))){
+        if ($exitCode){
+            header("HTTP/1.1 ${exitCode}");
+            exit;
+        } else {
+            exit(mysqli_error($link)." , in query ".$query);
+        }
+    }
     return $tres;
 }
 
@@ -27,7 +34,7 @@ function entries ($link, $query, $fetchrow = false, $assoc=false){
     return $entryarr;
 }
 
-function sanitize ($text, $link){
+function sanitize ($link, $text){
     return mysqli_real_escape_string($link, htmlspecialchars($text));
 }
 
@@ -37,5 +44,8 @@ function getcols($link){
     foreach (entries($link, $query, true) as $scstr ){
         $colstr.=$scstr[0];
     }
-    return rtrim($colstr, ", ");
+    
+    return rtrim($colstr, ", ").", users.id as u_id, IFNULL(users.nickname, users.name) as u_name ";
 }
+
+$posts_data_query="SELECT ".getcols($link)." FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id INNER JOIN users ON users.id = textupdates.author_id ";
