@@ -74,11 +74,12 @@ function rmoption(poption){
 
 
 function binarydecompose(value) {
-    var b = 1;
+    var b = 1n;
+    value=BigInt(value);
     var pows = [];
     while (b <= value) {
-        if (b & value) pows.push(b);
-        b <<= 1;
+        if (b & value) pows.push(Number(b));
+        b <<= 1n;
     }
     return pows;
 }
@@ -270,16 +271,18 @@ if (!isnew){
     i_title.disabled=true;
     editor.then(editorobj =>{editorobj.setData(t_content)});
 
-    var selectedradio = radiocategories[p_category & 60];
+    var selectedradio = radiocategories[Number(BigInt(p_category) & BigInt(60))];
     document.getElementById(selectedradio).checked = true;
     fillme.innerHTML = savedhtml[selectedradio];
     prev = selectedradio;
     i_radios.forEach(x=>x.disabled=true);
-    if (p_category & 60==16){ //votes
+    if ((Number(BigInt(p_category) & BigInt(60)))==16){ //votes
         var options=document.getElementById('options');
         document.getElementById('addoption').disabled=true;
-        document.getElementById('end_date').disabled=true;
-        JSON.parse(p_options).forEach(x=>addoption(x, "disabled"));
+        var i_enddate=document.getElementById('end_date');
+        i_enddate.disabled=true;
+        i_enddate.value=p_end_date;
+        JSON.parse(p_options).forEach(x=>addvoteoption(x, "disabled"));
     }
 }
 refreshcats();

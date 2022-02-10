@@ -22,6 +22,8 @@ if ( !$result->num_rows == 1){
 }
 $content = $result->fetch_assoc(); 
 $title = $content['p_title'];    
+$content['t_content']=htmlspecialchars_decode($content['t_content']);
+$content['t_css']=htmlspecialchars_decode($content['t_css']);
 
 $headertags="";
 

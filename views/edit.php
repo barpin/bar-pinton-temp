@@ -1,7 +1,7 @@
 
 <div class="formbox border">
 	<form onsubmit="return saverecipe(event)" id="fullform" >
-		<input <?= $new ? 'name="title"' : '' ?> type="text" maxlength="128" placeholder="Titulo" required class="w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-red-100">
+		<input name="title" type="text" maxlength="128" placeholder="Titulo" required class="w-full border-2 border-gray-200 p-3 rounded outline-none focus:border-red-100">
 		<br><br>
 		<div id="categories" class="border p-6 flex flex-wrap">
 			<div id="parentcats" class="flex"></div>

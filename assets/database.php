@@ -9,6 +9,7 @@ if(!$link){
     exit();
 }
 
+
 function qq ($link, $query, $exitCode=false){
     if(!($tres = mysqli_query($link, $query))){
         if ($exitCode){
@@ -49,3 +50,5 @@ function getcols($link){
 }
 
 $posts_data_query="SELECT ".getcols($link)." FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id INNER JOIN users ON users.id = textupdates.author_id ";
+
+
