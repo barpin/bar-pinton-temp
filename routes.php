@@ -1,5 +1,6 @@
 <?php
 define('debug', true);
+
 require_once("{$_SERVER['DOCUMENT_ROOT']}/router.php");
 
 // ##################################################

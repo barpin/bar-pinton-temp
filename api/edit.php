@@ -15,7 +15,7 @@ if (isset($_POST['id'])){
 
     assertExitCode($postdataobj->num_rows==0, "404 Not Found");
     $postdata=$postdataobj->fetch_assoc();
-    assertExitCode((gmp_init($userperms) & gmp_init($postdata['p_category'])) == 0, "403 Forbidden");
+    assertExitCode(($userperms & gmp_init($postdata['p_category'])) == 0, "403 Forbidden");
     assertExitCode(!(isset($_POST['content'])), "400 Bad Request");
 
     $css = isset($_POST['css']) ? "'".$_POST['css']."'" : "null";
@@ -38,7 +38,7 @@ if (isset($_POST['id'])){
         
     }
 
-    assertExitCode(!($addedpostcategories == (gmp_init($userperms) & $addedpostcategories)), "403 Forbidden");
+    assertExitCode(!($addedpostcategories == ($userperms & $addedpostcategories)), "403 Forbidden");
     assertExitCode($addedpostcategories == 0, "403 Forbidden");
     assertExitCode(!(isset($_POST['content']) && isset($_POST['type']) && isset($_POST['title'])), "400 Bad Request");
     assertExitCode($_POST['type']=='vote' && !( isset($_POST['end_date']) && $_POST['options'] != "[]"  ), "400 Bad Request");

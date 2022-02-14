@@ -1,7 +1,8 @@
 <?php
 //$url = strpos($_SERVER['REQUEST_URI'], "?")===false ? $_SERVER['REQUEST_URI'] :  strstr($_SERVER['REQUEST_URI'],"?",true);
+include 'assets/ver.php';
 require_once 'assets/database.php';
-$headertags='<link href="/css/feed.css" rel="stylesheet">';
+$headertags="<link href='/css/feed.css' rel='stylesheet'><script src='/js/dropdownfuncs.js?version=${ver}' defer></script>";
 
 if (isset($feedname)){
     $query="SELECT * FROM categories WHERE urlname = '${feedname}' AND parents & $allow = $allow";

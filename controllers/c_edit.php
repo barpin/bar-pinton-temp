@@ -1,5 +1,6 @@
 <?php
-$ver=rand(0,10000);
+include 'assets/ver.php';
+
 $title="Editando articulo";
 $headertags=<<<EOF
     

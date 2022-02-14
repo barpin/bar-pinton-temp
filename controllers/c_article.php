@@ -1,7 +1,7 @@
 <?php
 //$url = strpos($_SERVER['REQUEST_URI'], "?")===false ? $_SERVER['REQUEST_URI'] :  strstr($_SERVER['REQUEST_URI'],"?",true);
+include 'assets/ver.php';
 require_once 'assets/database.php';
-
 
 $query=$posts_data_query;
 if (isset($version)){
@@ -23,7 +23,7 @@ $content = $result->fetch_assoc();
 $title = $content['p_title'];    
 
 
-$headertags="";
+$headertags="<script src='/js/dropdownfuncs.js?version=${ver}' defer></script>";
 $displayas="fullpage";
 require_once 'assets/session_start.php';
 

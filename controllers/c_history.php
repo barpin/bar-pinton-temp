@@ -1,6 +1,8 @@
 <?php
+
+include 'assets/ver.php';
 $title="Administrador de codigos";
-$headertags='';/*
+$headertags="<script src='/js/dropdownfuncs.js?version=${ver}' defer></script>";/*
 <script src="/js/lib.js"></script>
 ';*/
 
