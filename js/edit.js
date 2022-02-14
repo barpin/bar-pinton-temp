@@ -15,7 +15,7 @@ var editasbtn= document.getElementById('editas');
 var htmleditor, csseditor;
 
 var savedhtml={
-    static: "Una pagina Sin Fecha",
+    static: "Una pagina Sin Fecha. Se recomienda usar el editor html/css",
     post: "Una actualizacion, como anunciando un evento, pidiendo ayuda, etc. No se recomienda usar CSS.",
     vote: `Un voto. Cada usuario puede votar anonimamente
         <br><br>
@@ -57,7 +57,7 @@ function addvoteoption(name="", disabled=""){
     options.insertAdjacentHTML("beforeend", `
         <div class="flex p-2 border items-center justify-around" >
             <span>${options.children.length}: </span> 
-            <input type="text" value=${name}>
+            <input type="text" value="${name}" class="form-control block w-1/2 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
             <button onclick="rmoption(this.parentElement)" ${disabled} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">-</button>
         </div>`);
 }
@@ -73,16 +73,7 @@ function rmoption(poption){
 }
 
 
-function binarydecompose(value) {
-    var b = 1n;
-    value=BigInt(value);
-    var pows = [];
-    while (b <= value) {
-        if (b & value) pows.push(Number(b));
-        b <<= 1n;
-    }
-    return pows;
-}
+
 
 function refreshcats(){
     var reqcats= new Set();
@@ -222,12 +213,17 @@ function postform (formData){
     })
     .then(CheckError)
     .then((jsonResponse) => {
+        var newpostnumber = jsonResponse; 
         Swal.fire({
             title: 'El post se ha creado/editado correctamente',
             icon: 'success',
           }).then((jsonResponse) => {
               console.log(jsonResponse);
-            //window.location.reload(true);
+              if (isnew) {
+                  window.location.href=window.location.origin+`/editar/${newpostnumber}`
+              } else {
+                window.location.reload(true);
+              }  
           });
     }).catch((error) => {
         console.log(error);

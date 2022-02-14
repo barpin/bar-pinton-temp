@@ -8,7 +8,7 @@ if (isset($feedname)){
     $result=qq($link, $query);
     if ($result->num_rows==1){
         $categoryassoc = $result->fetch_assoc();
-        $category = 2**$categoryassoc['id'];
+        $category = gmp_init(2)**gmp_init($categoryassoc['id']);
         $title=$categoryassoc['name'];
     } else {
         $_SESSION["msg"]="Esta secretaria/comison/club no se encontro (o se encontro mas de 1). Asegurese de que haya escrito bien el url  ".$query."   ".$feedname; 
@@ -18,20 +18,20 @@ if (isset($feedname)){
     }
 }
 if (isset($feedid)){
-    $category = 2**$feedid;
+    $category = gmp_init(2)**gmp_init($feedid);
     $query="SELECT * FROM categories WHERE id = ${feedid}";
     $categoryassoc = qq($link, $query)->fetch_assoc();
     $title=$categoryassoc['name'];
 }
 
 $cols=getcols($link);
-$staticcategory = $category+2**2+$categoryassoc['parents'];
-$notcategory = 2**2+2**5;
-$votecategory = $category+2**4;    
-$alertcategory = $category+2**5;
+$staticcategory = $category | 2**2 | gmp_init($categoryassoc['parents']); //EXACT SAME CATEGORIES
+$notcategory = 2**2 | 2**5;  //TODO FUNNY STUFF WITH CATEGORIES HERE PLEASE FIX & |
+$votecategory = $category | 2**4;    
+$alertcategory = $category | 2**5;
 $query=$posts_data_query."WHERE textupdates.replaced_at IS NULL AND posts.category ";
 $result=qq($link, $query."= ${staticcategory}");
-$content = $result->fetch_assoc();    
+$content = (isset($nomain) && $nomain) ? false : $result->fetch_assoc();    
 
 function decodeRequiredHtml($array){
     $array['t_css']=htmlspecialchars_decode($array['t_css']);
@@ -41,7 +41,7 @@ function decodeRequiredHtml($array){
 
 $alerts = array_map('decodeRequiredHtml',  entries($link, $query."& ${alertcategory} = ${alertcategory}"));
 $votes  = array_map('decodeRequiredHtml',   entries($link, $query."& ${votecategory} = ${votecategory} AND posts.end_date > NOW()"));
-$posts  = array_map('decodeRequiredHtml',   entries($link, $query."& ${notcategory} = 0 AND ( posts.end_date < NOW() OR posts.end_date IS NULL)"));
+$posts  = array_map('decodeRequiredHtml',   entries($link, $query."& ${notcategory} = 0 AND posts.category & ${category} = ${category} AND ( posts.end_date < NOW() OR posts.end_date IS NULL)"));
 
 require_once 'assets/session_start.php';
 

@@ -26,12 +26,12 @@ $content['t_content']=htmlspecialchars_decode($content['t_content']);
 $content['t_css']=htmlspecialchars_decode($content['t_css']);
 
 $headertags="";
-
+$displayas="fullpage";
 require_once 'assets/session_start.php';
 
 require_once 'partials/documenthead.php';
 include_once 'partials/navbar.php';
-require_once 'views/article.php';
+require_once 'controllers/c_partial_article.php';
 include_once 'partials/footer.php';
 
 

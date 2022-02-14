@@ -22,6 +22,7 @@ $headertags=<<<EOF
 
 
     <link href="/css/edit.css?${ver}" rel="stylesheet">
+    <script src="/js/lib.js?${ver}"></script>
     <script src="/js/edit.js?${ver}" defer></script>
 
 EOF; //TODO add one of these for dark mode https://codemirror.net/demo/theme.html#icecoder (https://cdnjs.com/libraries/codemirror)
@@ -68,6 +69,13 @@ if (isset($article)){
     $cols=getcols($link);
     $query= $posts_data_query."WHERE textupdates.replaced_at IS NULL AND posts.id = ${article} ";
     $articledata=qq($link, $query)->fetch_assoc();
+
+    if ((gmp_init($_SESSION['perms']) & gmp_init($articledata['p_category'])) == 0 ){
+        $_SESSION["msg"]="No Tenes Permiso para editar este articulo";
+        $_SESSION["icon"]="error";
+        header('Location: /');
+    }
+
     $jsvars = array_merge($articledata, ['isnew'=>0]); 
     $jsvars['t_css']=htmlspecialchars_decode($jsvars['t_css']);
     $jsvars['t_content']=htmlspecialchars_decode($jsvars['t_content']);
@@ -84,6 +92,12 @@ if (isset($article)){
     EOF; //all this just to avoid doing it in js which ill have to do later anyway.
     $permsdata=entries($link,$query);
 } else {
+    if (gmp_init($_SESSION['perms'])  == 0 ){
+        $_SESSION["msg"]="No Tenes Permiso para crear un articulo";
+        $_SESSION["icon"]="error";
+        header('Location: /');
+    }
+
     $jsvars = ['isnew'=>1,];
     $new=1;
     $permsdata=entries($link, "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
@@ -93,7 +107,7 @@ if (isset($article)){
 
 //TODO might remove this later, i think this is all done with php directly 
 $jsvars=array_merge($jsvars, ['perms'=>$_SESSION['perms'], 'permsdata'=>entries($link, "SELECT * FROM categories", false, 'id')]);
-
+$staticdisabled = gmp_intval((gmp_init($_SESSION['perms']) & 9) == 0);
 
 
 require_once 'partials/documenthead.php';

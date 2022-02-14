@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a href="/" style="height:50px;width:50px">
+      <img src="/img/logo.jpg" alt="">
+    </a>
+    <a class="navbar-brand" href="/">C.E.C.S.</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -47,18 +50,28 @@
             <li><a class="dropdown-item font-sans" href="/secretaria/noche">Secretaria del turno noche</a></li>
           </ul>
         </li>
-      <?php if (!$loggedin){ ?>
-      <li class="nav-item">
-        <a class="nav-link font-sans" href="/login">Iniciar sesion</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link font-sans" href="/registrar">Registrarse</a>
-      </li>
-      <?php } else { ?>
+        <?php if (!$loggedin){ ?>
         <li class="nav-item">
-          <a class="nav-link font-sans" href="/logout">Cerrar sesion</a>
+          <a class="nav-link font-sans" href="/login">Iniciar sesion</a>
         </li>
-      <?php } ?>
+        <li class="nav-item">
+          <a class="nav-link font-sans" href="/registrar">Registrarse</a>
+        </li>
+        <?php } else { ?>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <?= $_SESSION['user'] ?>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item font-sans" href="/logout">Cerrar sesion</a></li>
+            <?php $_userperms=gmp_init($_SESSION['perms']); ?>
+            <?= ($_userperms) != 0 ? '<li><a class="dropdown-item font-sans" href="/editar">Nuevo Post</a></li>' : "" ?>
+            <?= ($_userperms & 0b10000000000) == 0b10000000000 ? '<li><a class="dropdown-item font-sans" href="/admin/codes">Administrar Codigos</a></li>' : "" ?>
+            <?= ($_userperms & 0b100000000000) == 0b100000000000 ? '<li><a class="dropdown-item font-sans" href="/admin/users">Administrar Usuarios</a></li>' : "" ?>
+            <?= ($_userperms & 0b1000000000000) == 0b1000000000000 ? '<li><a class="dropdown-item font-sans" href="/admin/cats">Administrar Categorias</a></li>' : "" ?>
+          </ul>
+        </li>
+        <?php } ?>
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

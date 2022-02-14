@@ -1,6 +1,8 @@
 <?php
 
-//var_dump($_POST); /*
+//Creates/edits post
+//Inputs:
+//  TODO: document this
 
 
 
@@ -29,16 +31,13 @@ if (isset($_POST['id'])){
     
     $addedpostcategories=gmp_init(0); //this one verifies if the user has all the required categories
     $parentcategories=gmp_init(0); //the parent categories of each of the categories
-    
-    //var_dump($_POST['categories']);
-    //var_dump($postcategories);
+
     foreach ($_POST['categories'] as $category){
         $parentcategories |= gmp_init($globalCategories[$category]['parents']); 
         $addedpostcategories |= gmp_init(2)**gmp_init($category); 
         
     }
-   // $debug=var_export($addedpostcategories)."   ".var_export($userperms); 
-    //$debug=$addedpostcategories == ($userperms & $addedpostcategories);
+
     assertExitCode(!($addedpostcategories == (gmp_init($userperms) & $addedpostcategories)), "403 Forbidden");
     assertExitCode($addedpostcategories == 0, "403 Forbidden");
     assertExitCode(!(isset($_POST['content']) && isset($_POST['type']) && isset($_POST['title'])), "400 Bad Request");

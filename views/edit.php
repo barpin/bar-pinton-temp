@@ -31,7 +31,7 @@
 		<div class="border">
 			<div class="m-6">
 			<div class="flex justify-around">
-				<input type="radio" id="static" name="type" value="static" disabled required>
+				<input type="radio" id="static" name="type" value="static" <?=  $staticdisabled ? "disabled" : "" ?> required>
 				<label for="static">Estatico</label><br>
 				<input type="radio" id="post" name="type" value="post">
 				<label for="post">Post</label><br>

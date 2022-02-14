@@ -8,7 +8,7 @@ function authenticate($link, $perms=false){ //TODO real authentication (Oauth?)
     
     if (isset($_SESSION['id'])){
         if ($perms){
-            return [$_SESSION['id'], qq($link, "SELECT perms FROM users WHERE id = ${_SESSION['id']}")->fetch_assoc()["perms"]];
+            return [$_SESSION['id'], gmp_init(qq($link, "SELECT perms FROM users WHERE id = ${_SESSION['id']}")->fetch_assoc()["perms"])];
         } else {
             return $_SESSION['id'];
         }
@@ -35,7 +35,7 @@ function assertExitCode($assertion, $code){
     if ($assertion){
         header("HTTP/1.1 ${code}");
         //echo "HTTP/1.1 ${code}";
-        //exit;
+        exit;
     }
 }
 

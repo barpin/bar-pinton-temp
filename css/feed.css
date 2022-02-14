@@ -1,9 +1,11 @@
 .articlecontainer{
     width: 70vw;
+    margin: auto;
 }
 
 .post{
     margin: 3vh;
+    padding: 3vw;
     border-radius: 3vw;
     border: 1px solid #333;
 }
