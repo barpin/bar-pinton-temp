@@ -3,10 +3,9 @@
 require_once 'assets/database.php';
 
 
-$cols=getcols($link);
 $query=$posts_data_query;
 if (isset($version)){
-    $query.="WHERE textupdates.id = ${version}";
+    $query.="WHERE textupdates.id = ${version} AND posts.id = ${article}";
 } else {
     $query.="WHERE textupdates.replaced_at IS NULL AND posts.id = ${article}";
 
@@ -22,8 +21,7 @@ if ( !$result->num_rows == 1){
 }
 $content = $result->fetch_assoc(); 
 $title = $content['p_title'];    
-$content['t_content']=htmlspecialchars_decode($content['t_content']);
-$content['t_css']=htmlspecialchars_decode($content['t_css']);
+
 
 $headertags="";
 $displayas="fullpage";

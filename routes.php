@@ -47,6 +47,7 @@ any('/comision/$feedname',   'controllers/c_feed.php', ['allow'=>128]);
 any('/club/$feedname',       'controllers/c_feed.php', ['allow'=>256]);
 any('/votos',                'controllers/c_feed.php', ['feedid'=>4]);
 any('/noticias',             'controllers/c_feed.php', ['feedid'=>1, 'nomain'=>true]);
+any('/todo',                 'controllers/c_feed.php', ['feedid'=>0, 'nomain'=>true]);
 any('/archivo/$feedid',      'controllers/c_feed.php', ['archive'=>true]);
 any('/comisiones',           'controllers/c_feed.php', ['feedid'=>7]);
 any('/clubes',               'controllers/c_feed.php', ['feedid'=>8]);
@@ -65,6 +66,7 @@ any('/participacion',                       'controllers/c_article.php', ['artic
 any('/reuniones',                           'controllers/c_article.php', ['article'=>10]);
 any('/transparencia',                       'controllers/c_article.php', ['article'=>11]);
 any('/articulo/$article',                   'controllers/c_article.php');
+any('/articulo/$article/historia',          'controllers/c_history.php');
 any('/articulo/$article/historia/$version', 'controllers/c_article.php');
 
 

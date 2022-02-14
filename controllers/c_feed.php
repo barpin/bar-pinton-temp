@@ -33,15 +33,11 @@ $query=$posts_data_query."WHERE textupdates.replaced_at IS NULL AND posts.catego
 $result=qq($link, $query."= ${staticcategory}");
 $content = (isset($nomain) && $nomain) ? false : $result->fetch_assoc();    
 
-function decodeRequiredHtml($array){
-    $array['t_css']=htmlspecialchars_decode($array['t_css']);
-    $array['t_content']=htmlspecialchars_decode($array['t_content']);
-    return $array;
-}
 
-$alerts = array_map('decodeRequiredHtml',  entries($link, $query."& ${alertcategory} = ${alertcategory}"));
-$votes  = array_map('decodeRequiredHtml',   entries($link, $query."& ${votecategory} = ${votecategory} AND posts.end_date > NOW()"));
-$posts  = array_map('decodeRequiredHtml',   entries($link, $query."& ${notcategory} = 0 AND posts.category & ${category} = ${category} AND ( posts.end_date < NOW() OR posts.end_date IS NULL)"));
+
+$alerts = entries($link, $query."& ${alertcategory} = ${alertcategory}");
+$votes  = entries($link, $query."& ${votecategory} = ${votecategory} AND posts.end_date > NOW()");
+$posts  = entries($link, $query."& ${notcategory} = 0 AND posts.category & ${category} = ${category} AND ( posts.end_date < NOW() OR posts.end_date IS NULL)");
 
 require_once 'assets/session_start.php';
 

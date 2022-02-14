@@ -7,7 +7,7 @@ $displayas="infeed";
 <div class="articlecontainer">
 
     <?php foreach ($alerts as $content) { ?>
-    <div class="post">
+    <div class="alert post">
         <?php include 'controllers/c_partial_article.php'; ?>
     </div>
     <?php } ?>

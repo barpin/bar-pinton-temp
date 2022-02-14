@@ -20,6 +20,7 @@
             <li><a class="dropdown-item font-sans" href="/estatuto">Estatuto</a></li>
             <li><a class="dropdown-item font-sans" href="/sitio">Informacion del Sitio</a></li>
             <li><a class="dropdown-item font-sans" href="/noticias">Noticias</a></li>
+            <li><a class="dropdown-item font-sans" href="/todo">Todo</a></li>
             <li><a class="dropdown-item font-sans" href="/contacto">Contacto</a></li>
             <li><a class="dropdown-item font-sans" href="/miembros">Miembros</a></li>
             <li><a class="dropdown-item font-sans" href="/reuniones">Reuniones de Delegados</a></li>

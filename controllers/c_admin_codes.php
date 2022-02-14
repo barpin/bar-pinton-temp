@@ -1,6 +1,10 @@
 <?php
 $title="Administrador de codigos";
-$headertags='<link href="/css/codes.css" rel="stylesheet"><script src="/js/lib.js"></script>';
+$headertags='
+<link href="/css/codes.css" rel="stylesheet">
+<script src="/js/lib.js"></script>
+<script src="/js/codes.js" defer></script>
+';
 
 
 require_once 'assets/session_start.php';
@@ -11,9 +15,10 @@ if ((gmp_init($_SESSION['perms']) & 1024) == 0 ){
     $_SESSION["icon"]="error";
     header('Location: /');
 }
-$query="SHOW COLUMNS FROM users";
-$tablehead=entries($link, $query);
-$query="SELECT * FROM users WHERE users.password IS NULL";
+//$query="SHOW COLUMNS FROM users WHERE Field != nicknames && Field != nicknames";
+//$tablehead=entries($link, $query);
+$tablehead=["id","name","perms","updated_at","code"];
+$query="SELECT id,name,perms,updated_at,code FROM users WHERE users.password IS NULL";
 $codeslist=entries($link, $query);
 
 //$jsvars=['userperms'=>$_SESSION['perms']];
