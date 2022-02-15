@@ -1,5 +1,5 @@
 <div class="articlebody" id="art-<?= $content['p_id'] ?>" style="<?= $margins ? "width:65%; margin: 10px auto;" : "" ?><?= $redback ? "background-color:rgba(245, 0, 0, 0.5);" : "" ?><?= $articleborder ? "padding: 3vw;border-radius: 3vw;border: 1px solid #333;" : "" ?>"  >
-<div class="dotsdropdown" onclick="this.classList.toggle('dotsactive');"> 
+<div class="dotsdropdown" tabindex="0" role="button" onmousedown="var tthis = this;if (tthis.matches(':focus')){setTimeout(()=>{tthis.blur()}, 1)};"> 
     <div class="dots">
         <div class="dot"></div>
         <div class="dot"></div>

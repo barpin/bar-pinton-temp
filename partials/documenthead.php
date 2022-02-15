@@ -55,9 +55,10 @@
         overflow-y: hidden;
         overflow-x: visible;
         transform: translate(-25%);
-        transition: max-height 1s ease-in-out;
+        transition: max-height 0.4s ease-in-out;
+        z-index: 11;
     }
-    .dotsactive .dotsdropcontent{
+    .dotsdropdown:focus .dotsdropcontent{
         max-height: 100vh;
     }
     .dotsdropitems{
