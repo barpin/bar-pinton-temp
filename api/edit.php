@@ -51,7 +51,7 @@ if (isset($_POST['id'])){
     ];
     $finalcategories=$addedpostcategories | $parentcategories | gmp_init($postTypes[$_POST['type']]);
     $end_date = isset($_POST['end_date']) ? "'".$_POST['end_date']."'" : "null";
-    $css = isset($_POST['css']) ? "'".$_POST['css']."'" : "null";
+    $css = isset($_POST['css']) ? "'".$_POST['css']."'" : "null";    
     $postoptions = isset ($_POST['options']) ? "'".json_encode($_POST['options'])."'" : "null" ;
 
     $query= "INSERT INTO posts VALUES(null, '${_POST['title']}', NOW(), null, ${finalcategories}, ${end_date}, ${postoptions} ); ";
@@ -61,6 +61,15 @@ if (isset($_POST['id'])){
 
     $query="INSERT INTO textupdates VALUES(null, ${newpostID}, '${_POST['content']}', ${css}, ${_SESSION['id']}, NOW(), null)";
     qq($link, $query);
+
+    if (isset ($_POST['options'])){
+        for ($x=0;$x<count($_POST['options']);$x++){
+            qq($link, "INSERT INTO votesresults VALUES (null, ${newpostID}, ${x})");
+        }
+    }
+
+
+
     echo $newpostID;
 }
 

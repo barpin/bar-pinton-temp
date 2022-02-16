@@ -67,6 +67,26 @@ if ($displayas=="fullpage"){
     }
 }
 
+if ($category==16){
+    $voteoptions=json_decode($content['p_options']);
+    if (new dateTime($content['p_end_date']) < new dateTime() || !$loggedin){
+        $votephase=2;
+    } else {
+        $query="SELECT * FROM votescast WHERE post_id = ${content['p_id']} AND user_id = ${_SESSION['id']}";
+        if (qq($link, $query)->num_rows){
+            $votephase=2;
+        } else {
+            $votephase=1;
+        }
+    }
+
+    if ($votephase==2){ 
+        $query="SELECT vote,COUNT(1) as OccurenceValue FROM votesresults WHERE post_id=${content['p_id']} GROUP BY vote ;";
+        $votesresults=entries($link, $query);
+    }
+} else {
+    $votephase=0;
+}
 include 'partials/post.php';
 
 

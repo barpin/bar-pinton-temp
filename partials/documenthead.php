@@ -24,67 +24,7 @@
     
     */ ?>
 
-
-    <style>
-    ion-icon{
-        margin-top: 5px;
-        font-size: 24px;
-    }
-    .dotsdropdown{
-        transform: translate(50px, 0);
-        position: absolute;
-        right: 10rem;
-        z-index: 10;
-        
-    }
-
-    .dots{
-        padding: 0.3rem;
-        display: inline-flex;
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-    .dot{
-        margin:0.1rem;
-        height: 0.4rem;
-        width: 0.4rem;
-        background-color: lightgray;
-        border-radius: 100%;
-    }
-    .dotsdropcontent{
-        max-height: 0;
-        overflow-y: hidden;
-        overflow-x: visible;
-        transform: translate(-25%);
-        transition: max-height 0.4s ease-in-out;
-        z-index: 11;
-    }
-    .dotsdropdown:focus .dotsdropcontent{
-        max-height: 100vh;
-    }
-    .dotsdropitems{
-        display:inline-flex;
-        gap: 0.2rem;
-        padding: 0.5rem;
-        border-radius: 0.3rem;
-        flex-direction: column;
-        background-color: white ;
-        border: 1px solid rgba(0,0,0,.55);
-        
-        
-    }
-
-    .dotdropdownlink{
-        color: rgba(0,0,0,.55);
-        border-radius: 2px;
-        text-decoration: none;
-        font-size: 1.2em;
-        font-family: sans-serif;
-    }
-
-    .dotdropdownlink:hover{
-        background-color: rgb(187, 187, 187);
-    }
-    </style>
+    <link href="/css/main.css" rel="stylesheet">
     <link href="/css/footer.css" rel="stylesheet">
     <script id="vars">
         <?php
