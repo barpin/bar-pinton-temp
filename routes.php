@@ -82,6 +82,7 @@ any('/editar/$article', 'controllers/c_edit.php');
 any('/rss',             'controllers/c_rss.php');
 any('/admin/codes',     'controllers/c_admin_codes.php');
 any('/admin/users',     'controllers/c_admin_users.php');
+any('/admin/cats',     'controllers/c_admin_categories.php');
 
 any('/api/v1/$type',           'controllers/c_api.php');
 

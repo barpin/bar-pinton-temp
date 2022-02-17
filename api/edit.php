@@ -10,7 +10,7 @@ $userdata= authenticate($link, true);
 $userid=$userdata[0];
 $userperms=$userdata[1]; //in case it was changed since last login
 
-if (isset($_POST['id'])){
+if (isset($_POST['id'])){ //if editing (not creating new)
     $postdataobj=qq($link, $posts_data_query."WHERE posts.id = ${_POST['id']}");
 
     assertExitCode($postdataobj->num_rows==0, "404 Not Found");
