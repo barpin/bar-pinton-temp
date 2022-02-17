@@ -53,7 +53,8 @@ any('/archivo/$feedany',      'controllers/c_feed.php', ['archive'=>true]);
 any('/comisiones',           'controllers/c_feed.php', ['feedid'=>7]);
 any('/clubes',               'controllers/c_feed.php', ['feedid'=>8]);
 any('/secretarias',          'controllers/c_feed.php', ['feedid'=>6]);
-any('/reuniones',            'controllers/c_feed.php', ['feedid'=>16]);
+any('/reuniones',            'controllers/c_feed.php', ['feedid'=>21]);
+any('/elecciones',            'controllers/c_feed.php', ['feedid'=>20]);
 any('/listado/$feedany',      'controllers/c_feed.php' );
 
 
@@ -76,11 +77,11 @@ any('/login',           'controllers/c_login.php');
 any('/logout',          'controllers/c_logout.php');
 any('/registrar',       'controllers/c_register.php');
 any('/busqueda',        'controllers/c_search.php');
-any('/nuevo',           'controllers/c_edit.php');
 any('/editar',          'controllers/c_edit.php');
 any('/editar/$article', 'controllers/c_edit.php');
 any('/rss',             'controllers/c_rss.php');
-any('/admin/codes',           'controllers/c_admin_codes.php');
+any('/admin/codes',     'controllers/c_admin_codes.php');
+any('/admin/users',     'controllers/c_admin_users.php');
 
 any('/api/v1/$type',           'controllers/c_api.php');
 

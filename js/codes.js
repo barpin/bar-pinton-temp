@@ -36,7 +36,7 @@ function editrow(id){
 
     row.querySelector('.name').innerHTML=`<input type="text" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">`;
     row.querySelector('.name').childNodes[0].value=olddata[id][0];
-    row.querySelector('.perms').innerHTML=`<input type="number" value="${olddata[id][1]}" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">`;
+    row.querySelector('.perms').innerHTML=`<input type="number" class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">`;
     row.querySelector('.perms').childNodes[0].value=olddata[id][1];
     row.querySelector('.edit').innerHTML=`<button onclick='modcode(${id})'>✔</button><button  onclick='cancelmod(${id})'>✖</button>`;
     
@@ -72,7 +72,7 @@ function modcode(id){
         Swal.fire({ title: 'El codigo no se ha modificado', icon: 'error', text: error, showCancelButton: true, confirmButtonText: 'Reintentar',})
         .then((result) => {
             if (result.isConfirmed) {
-                newcode (formData);
+                modcode (id);
             }   
         });
     });

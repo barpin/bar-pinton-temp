@@ -1,13 +1,13 @@
 <h1>Admin codigos</h1>
 <br>
 <br>
+✏️=edit, ❌=delete
 <table border="1">
     <tr>
 <?php foreach ($tablehead as $reg){
     echo "<th>${reg}</th>   ";
 } ?>
-    <th>Edit</th>
-    <th>Delete</th>
+    <th colspan="2" >Actions</th>
     </tr>
 <?php foreach ($codeslist as $row){
         echo "<tr id='c${row['id']}'>";
@@ -21,7 +21,7 @@
 <br><br>
 
 <form id="fullform" onsubmit="return newcode(event)" class="border-2 border-gray rounded m-1">
-<h1>Nuevo codigo</h1>
+<h3>Nuevo codigo</h3>
 <br>
 <label for="name">Nombre Completo / Iniciales y Apellido</label>
     <input name="name" type="text" maxlength="64" class="form-control block w-1/2 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">

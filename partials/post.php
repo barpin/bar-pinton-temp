@@ -10,16 +10,16 @@
         <div class="dotsdropitems">
             <span>Creado: <?= $content['p_created_at'] ?></span>
             <span>Modificado: <?= $content['t_created_at'] ?></span>
+            
+            <?php if ($content['p_deleted_at']) { ?> <span>Borrado: <?= $content['p_deleted_at'] ?></span> <?php } ?>
+            <?php if ($content['p_end_date']) { ?> <span>Termina/o el: <?= $content['p_end_date'] ?></span> <?php } ?>
+            <?php if ($showauthor) { ?> <span>Editado por: <?= $content['u_name'] ?></span> <?php } ?>
             <?php if ($content['t_replaced_at']) { ?> 
                 <span>Reemplazado: <?= $content['t_replaced_at'] ?></span> 
                 <?= $restore ?  "<button class='dotdropdownlink text-left' onclick='restore({id: ${content['t_id']} })' >Restaurar Version</button>" : "" ?>
             <?php } ?>
-            <?php if ($content['p_deleted_at']) { ?> <span>Borrado: <?= $content['p_deleted_at'] ?></span> <?php } ?>
-            <?php if ($content['p_end_date']) { ?> <span>Termina/o el: <?= $content['p_end_date'] ?></span> <?php } ?>
-            <?php if ($showauthor) { ?> <span>Editado por: <?= $content['u_name'] ?></span> <?php } ?>
-
             <?= $viewhist ?  "<a class='dotdropdownlink' href='/articulo/${content['p_id']}/historia'>Ver Historia</a>" : "" ?>
-            <a class='dotdropdownlink' href='/articulo/<?= $content['p_id'].($content['t_replaced_at'] ? "/historia/" . $content['t_id']  : "") ?>'>Detalles</a>
+            <?php if ($viewdetails) { ?> <a class='dotdropdownlink' href='/articulo/<?= $content['p_id'].($content['t_replaced_at'] ? "/historia/" . $content['t_id']  : "") ?>'>Detalles</a> <?php } ?>
             <?php if ($canedit){ ?>
             <a class="dotdropdownlink" href="/editar/<?= $content['p_id'] ?>">Editar</a>
             <button class="dotdropdownlink text-left" onclick="toggledelete({id:<?= $content['p_id'] ?>})"><?=!$isdeleted ? "Eliminar" : "Reestablecer (deseliminar)" ?> </button>

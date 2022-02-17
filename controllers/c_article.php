@@ -6,6 +6,7 @@ require_once 'assets/database.php';
 $query=$posts_data_query;
 if (isset($version)){
     $query.="WHERE textupdates.id = ${version} AND posts.id = ${article}";
+    $showauthor=1;
 } else {
     $query.="WHERE textupdates.replaced_at IS NULL AND posts.id = ${article}";
 

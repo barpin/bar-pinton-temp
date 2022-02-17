@@ -24,6 +24,7 @@
             <li><a class="dropdown-item font-sans" href="/contacto">Contacto</a></li>
             <li><a class="dropdown-item font-sans" href="/miembros">Miembros</a></li>
             <li><a class="dropdown-item font-sans" href="/reuniones">Reuniones de Delegados</a></li>
+            <li><a class="dropdown-item font-sans" href="/elecciones">Elecciones</a></li>
             <li><a class="dropdown-item font-sans" href="/transparencia">Transparencia</a></li>
             <li><a class="dropdown-item font-sans" href="/docs">Informacion Tecnica</a></li>
 

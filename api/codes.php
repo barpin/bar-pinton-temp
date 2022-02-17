@@ -16,8 +16,10 @@ assertExitCode( ($userperms & 1024 ) == 0 , "403 Forbidden");
 
 if (isset($_POST['id'])){
   if (isset($_POST['delete'])){
-    $query= "DELETE FROM users WHERE id = ${_POST['id']} ";
-    qq($link, $query);
+    $query= "DELETE FROM users WHERE id = ${_POST['id']} AND password IS NULL";
+    $result=qq($link, $query);
+    assertExitCode( $result , "400 Bad Request");
+
     echo $_POST['id'];
   } else {
     assertExitCode( !(isset($_POST['perms']) && isset($_POST['name'])), "400 Bad Request");
@@ -28,7 +30,7 @@ if (isset($_POST['id'])){
     $changedperms=gmp_init($_POST['perms']) ^ gmp_init($oldrow['perms']);
     assertExitCode( !(($userperms & $changedperms) == $changedperms), "403 Forbidden");
 
-    $query= "UPDATE users SET name = '${_POST['name']}' , perms = ${_POST['perms']} WHERE id = ${_POST['id']} ";
+    $query= "UPDATE users SET name = '${_POST['name']}' , perms = ${_POST['perms']} WHERE id = ${_POST['id']} AND password IS NULL";
     qq($link, $query);
     echo $_POST['id'];
   }
