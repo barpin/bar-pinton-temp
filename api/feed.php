@@ -6,46 +6,7 @@
 define("urlcategoryarr", entries($link, "SELECT * FROM categories", false, "urlname"));
 define("namecategoryarr", entries($link, "SELECT * FROM categories", false, "name"));
 
-/*
-GLOBAL $counter;
-$counter=100;
-function parseurl ($url){
-    GLOBAL $counter;
-  	$matches=[];
-  
-  	if ($counter > 0){
-    	echo "<br><br>".$url;
-      $counter--;
-    }
-//      if ($counter > 0){echo "<br>"; var_dump($matches); }
-  	if (count($matches=explode("(", $url)) > 1){
 
-    } else if (count($matches=explode(" ", $url)) > 1) {
-      if ($counter > 0){echo "<br>stuck on or";}
-        return implode('', array_map("parseurl",$matches));
-  		    	
-    } else if (count($matches=explode(",", $url)) > 1) {
-      if ($counter > 0){echo "<br>stuck on and";}
-        return implode('', array_map("parseurl",$matches));
-    } else if (strpos($url, "!")===0){
-      if ($counter > 0){echo "<br>stuck on not";}
-        return parseurl(substr(1,-1));
-    } else if (is_numeric($url)){
-      if ($counter > 0){echo "<br>stuck on numeric";}
-        return $url;
-    } else if (isset(urlcategoryarr[$url])){
-      if ($counter > 0){echo "<br>stuck on url";}
-        return 2**urlcategoryarr[$url]['id'];
-    } else if (isset(namecategoryarr[$url])){
-      if ($counter > 0){echo "<br>stuck on name";}
-        return 2**namecategoryarr[$url]['id'];
-    } else {
-      if ($counter > 0){echo "<br>stuck on bad request";}
-        header("HTTP/1.1 400 Bad Request");
-        exit;    
-    }
-}
-*/
   
 function closestSeparator($url){
 	$closestSeparator="";
@@ -78,14 +39,14 @@ function segmenttonumber($segment){
       
     } else {
     	header("HTTP/1.1 400 Bad Request");
-        exit;
+      exit;
     }
 }
 
 function parseurl($url){
-  $counter=100;
+  //$counter=100;
   	$separatorvals=["."=>" AND ",","=>" OR ","("=>" ( ",")"=>" ) ","!"=>" NOT "];
-  	$query="SELECT posts.id FROM posts WHERE ";
+  	$query=" ( ";
   	while (($csp=closestSeparator($url))[0]){
       //if ($counter > 0){echo "<br>".$url."   ".$csp[0]."   ".$csp[1]."<br>".$query;$counter--;}
       if ($csp[1]==0){
@@ -96,29 +57,78 @@ function parseurl($url){
         $url=substr($url, $csp[1]);
       }
     }
-  $query.= segmenttonumber($url);
+  $query.= segmenttonumber($url) . " ) ";
   //echo "<b>${query}</b>";
  
   return $query;
 }
 
-$query=parseurl($url);
-if ($category=getpost("category")){
-  if ($orderBy=getpost("orderBy")){
-    if ($order=getpost("direction")){
-      $query.=" ORDER BY ${orderBy} ${order}";
-      
+
+
+function queryToRank($link, $input){
+  $input=htmlspecialchars_decode($input);
+  $sumterms=[]; 
+  $sepqs=array_filter(explode('"', $input), fn ($x)=>$x);
+  for ($x=0;$x<count($sepqs);$x++){
+    if ($x % 2){
+      $sumterms[] = sumTerm($link, $sepqs[$x]);
     } else {
-      $query.=" ORDER BY ${orderBy} DESC";
+
+      $subinputs=array_filter(explode(' ', $sepqs[$x]), fn ($x)=>$x);
+      $repeatedlink=array_fill(0, count($subinputs), $link);
+      $sumterms[] = implode(" + ", array_map('sumterm', $repeatedlink, $subinputs) );
     }
-  } else {
-    $query.=" ORDER BY p_created_at DESC";
-  } 
-} else {
-  header("HTTP/1.1 400 Bad Request");
-  exit;
+  }
+  return " SUM( " . implode(" + ", $sumterms) . " ) AS relevance " ;
 }
 
+function sumTerm($link, $subqueryval){
+  //$queriedfields=['textupdates.content', 'posts.title', 'users.nickname', 'users.name'];
+  $queriedfields=['textupdates.content', 'posts.title']; //searching usernames breaks everything for some reason. TODO?
+  $resanitizedsqv=mysqli_real_escape_string($link, $subqueryval);
+  $repeatedqueryval=array_fill(0, count($queriedfields), $resanitizedsqv);
+  
+  $summedTerm=array_map('makeTerm', $queriedfields, $repeatedqueryval );
+  $term=implode(" + ", $summedTerm);
+  return $term;
+}
+
+function makeTerm($queryfield, $subsubqueryval){
+  return "((LENGTH(LOWER(${queryfield})) - LENGTH(REPLACE(LOWER(${queryfield}), LOWER('${subsubqueryval}'), '')))/LENGTH('${subsubqueryval}'))";
+}
+
+$whereclause= getpost("category") ? parseurl(getpost("category")) : "1";
+$searchquery= getpost("q") ?? false;
 
 
-echo json_encode(array_map( function($x){return $x['id'];} , entries($link, $query))); 
+//no more inline ifs this is hard enough to read on its own.
+
+$query="SELECT ". ( debug ? getcols($link) : " posts.id  ");
+if ($searchquery){
+  $query .= " , ".queryToRank($link, $searchquery) ;
+}
+$query .= $posts_data_inners;
+$query .= " WHERE textupdates.replaced_at IS NULL AND ${whereclause} ";
+if ($searchquery){
+  $query .= " GROUP BY textupdates.id " ;
+}
+$query .= " ORDER BY ". ( getpost("orderBy") ? getpost("orderBy") : ($searchquery ? "relevance" : "p_created_at" ) ). " ";
+$query .= getpost("direction") ? " ".getpost("direction")." " : " DESC " ;
+
+
+function idecho($y){
+  echo $y;
+  return $y;
+}
+
+if ($searchquery){
+  $result=array_filter(entries($link, $query), fn ($x)=>floatval($x['relevance']));
+} else {
+  $result=entries($link, $query);
+}
+
+echo json_encode(array_map( function($x){return $x['p_id'];} , $result )); 
+
+echo "<br>";
+echo "<br>";
+echo $query;

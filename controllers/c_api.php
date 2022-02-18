@@ -28,7 +28,7 @@ function queryAndPush($link, $query){
 };
 
 function getpost($varname){
-    return $_GET[$varname] ?? $_POST[$varname] ?? false;
+    return $_GET[$varname] ?? $_POST[$varname] ?? false; //this should have been null but its too late now
 }
 
 function assertExitCode($assertion, $code){

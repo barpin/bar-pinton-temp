@@ -48,7 +48,8 @@ function getcols($link){
     
     return rtrim($colstr, ", ").", users.id as u_id, IFNULL(users.nickname, users.name) as u_name ";
 }
+$posts_data_inners= " FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id INNER JOIN users ON users.id = textupdates.author_id ";
 
-$posts_data_query="SELECT ".getcols($link)." FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id INNER JOIN users ON users.id = textupdates.author_id ";
+$posts_data_query="SELECT ".getcols($link).$posts_data_inners;
 
 

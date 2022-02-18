@@ -32,7 +32,7 @@
 
 <form id="fullform" onsubmit="return newcat(event)" class="border-2 border-gray rounded m-1">
     <h3>Nueva categoria</h3>
-    <b>Cuidado! Las categorias creadas no se pueden eliminar permanentemente, solo desactivar</b>
+    <b>Cuidado! Las categorias creadas no se pueden eliminar permanentemente, solo desactivadas, y hay un limite de 64 categorias</b>
     <br>
     <label for="id">Id</label>
     <input name="id" type="number" min="0" max="63" required class="form-control block w-1/2 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">

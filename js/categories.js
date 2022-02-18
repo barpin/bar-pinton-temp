@@ -124,7 +124,7 @@ function refreshcats(){
     var reqcats= new Set();
     originalcategories.forEach(x=>{
         if (x.checked){
-            binarydecompose(categoryarr[x.getAttribute('data-cat')]['parents']).forEach(y=>reqcats.add(Math.log(y)/Math.log(2)));
+            binarydecompose(categoryarr[x.getAttribute('data-cat')]['parents']).forEach(y=>reqcats.add(Math.round(Math.log(y)/Math.log(2))));
         }
     });
     reqcats.add(0);
