@@ -75,19 +75,22 @@ function queryToRank($link, $input){
     } else {
 
       $subinputs=array_filter(explode(' ', $sepqs[$x]), fn ($x)=>$x);
-      $repeatedlink=array_fill(0, count($subinputs), $link);
-      $sumterms[] = implode(" + ", array_map('sumterm', $repeatedlink, $subinputs) );
       foreach ($subinputs as $subi){
         $fuzzyterms = getLevenshtein1($subi);
-        foreach ($fuzzyterms as $fuzzi){
-          $sumterms[]=sumTerm($link, $fuzzi, true, 0.5);
-        }
+        $queriedfields=['textupdates.content', 'posts.title']; 
+        foreach ($queriedfields as $cfield){
+          $sumterms[]=makeTerm($cfield, $subi);
+          foreach ($fuzzyterms as $fuzzi){
+            $sumterms[]=makeTerm($cfield, $fuzzi, $regexp=true, $relevance=0.6);
+          }
+        }        
       }
 
     }
   }
   return " SUM( " . implode(" + ", $sumterms) . " ) AS relevance " ;
 }
+
 
 function sumTerm($link, $subqueryval, $regexp=false, $relevance=1){
   //$queriedfields=['textupdates.content', 'posts.title', 'users.nickname', 'users.name'];
