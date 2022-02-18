@@ -77,25 +77,58 @@ function queryToRank($link, $input){
       $subinputs=array_filter(explode(' ', $sepqs[$x]), fn ($x)=>$x);
       $repeatedlink=array_fill(0, count($subinputs), $link);
       $sumterms[] = implode(" + ", array_map('sumterm', $repeatedlink, $subinputs) );
+      foreach ($subinputs as $subi){
+        $fuzzyterms = getLevenshtein1($subi);
+        foreach ($fuzzyterms as $fuzzi){
+          $sumterms[]=sumTerm($link, $fuzzi, true, 0.5);
+        }
+      }
+      /*
+      $fuzzyterms=array_map('getLevenshtein1', $subinputs);
+      var_dump($fuzzyterms);
+      $fuzzyterms=array_map(fn ($x)=>array_map('sumterm', ),array_fill(0, count($fuzzyterms), $link), $fuzzyterms);
+      $fuzzyterms=array_map('implode',array_fill(0, count($fuzzyterms), " + "), $fuzzyterms);
+      $fuzzyterms=implode(" + ", $fuzzyterms);
+      $sumterms[]=$fuzzyterms;
+      */
     }
   }
   return " SUM( " . implode(" + ", $sumterms) . " ) AS relevance " ;
 }
 
-function sumTerm($link, $subqueryval){
+function sumTerm($link, $subqueryval, $regexp=false, $relevance=1){
   //$queriedfields=['textupdates.content', 'posts.title', 'users.nickname', 'users.name'];
   $queriedfields=['textupdates.content', 'posts.title']; //searching usernames breaks everything for some reason. TODO?
+  
   $resanitizedsqv=mysqli_real_escape_string($link, $subqueryval);
   $repeatedqueryval=array_fill(0, count($queriedfields), $resanitizedsqv);
+  $repeatedregexp=array_fill(0, count($queriedfields), $regexp);
+  $repeatedrelevance=array_fill(0, count($queriedfields), $relevance);
   
-  $summedTerm=array_map('makeTerm', $queriedfields, $repeatedqueryval );
+  $summedTerm=array_map('makeTerm', $queriedfields, $repeatedqueryval, $repeatedregexp ,$repeatedrelevance);
   $term=implode(" + ", $summedTerm);
   return $term;
 }
 
-function makeTerm($queryfield, $subsubqueryval){
-  return "((LENGTH(LOWER(${queryfield})) - LENGTH(REPLACE(LOWER(${queryfield}), LOWER('${subsubqueryval}'), '')))/LENGTH('${subsubqueryval}'))";
+function makeTerm($queryfield, $subsubqueryval, $regexp=false, $relevance=1){
+  return "(((LENGTH(LOWER(${queryfield})) - LENGTH(".($regexp ? "REGEXP_REPLACE" : "REPLACE")."(LOWER(${queryfield}), LOWER('${subsubqueryval}'), '')))/LENGTH('${subsubqueryval}'))*${relevance})";
 }
+
+function getLevenshtein1($word){
+    $words = array();
+    for ($i = 0; $i < strlen($word); $i++) {
+        // insertions
+        $words[] = substr($word, 0, $i) . '.' . substr($word, $i);
+        // deletions
+        $words[] = substr($word, 0, $i) . substr($word, $i + 1);
+        // substitutions
+        $words[] = substr($word, 0, $i) . '.' . substr($word, $i + 1);
+    }
+    // last insertion
+    $words[] = $word . '.';
+    return $words;
+}
+
 
 $whereclause= getpost("category") ? parseurl(getpost("category")) : "1";
 $searchquery= getpost("q") ?? false;
