@@ -83,14 +83,7 @@ function queryToRank($link, $input){
           $sumterms[]=sumTerm($link, $fuzzi, true, 0.5);
         }
       }
-      /*
-      $fuzzyterms=array_map('getLevenshtein1', $subinputs);
-      var_dump($fuzzyterms);
-      $fuzzyterms=array_map(fn ($x)=>array_map('sumterm', ),array_fill(0, count($fuzzyterms), $link), $fuzzyterms);
-      $fuzzyterms=array_map('implode',array_fill(0, count($fuzzyterms), " + "), $fuzzyterms);
-      $fuzzyterms=implode(" + ", $fuzzyterms);
-      $sumterms[]=$fuzzyterms;
-      */
+
     }
   }
   return " SUM( " . implode(" + ", $sumterms) . " ) AS relevance " ;
@@ -111,7 +104,7 @@ function sumTerm($link, $subqueryval, $regexp=false, $relevance=1){
 }
 
 function makeTerm($queryfield, $subsubqueryval, $regexp=false, $relevance=1){
-  return "(((LENGTH(LOWER(${queryfield})) - LENGTH(".($regexp ? "REGEXP_REPLACE" : "REPLACE")."(LOWER(${queryfield}), LOWER('${subsubqueryval}'), '')))/LENGTH('${subsubqueryval}'))*${relevance})";
+  return "(((LENGTH(".($regexp ? "@temptext" : "LOWER(${queryfield})").") - LENGTH(@temptext:=(".($regexp ? "REGEXP_REPLACE" : "REPLACE")."(".($regexp ? "@temptext" : "LOWER(${queryfield})").", LOWER('${subsubqueryval}'), ''))))/LENGTH('${subsubqueryval}'))*${relevance})";
 }
 
 function getLevenshtein1($word){
@@ -135,7 +128,8 @@ $searchquery= getpost("q") ?? false;
 
 
 //no more inline ifs this is hard enough to read on its own.
-
+$query="SET @temptext :='';";
+qq($link, $query);
 $query="SELECT ". ( debug ? getcols($link) : " posts.id  ");
 if ($searchquery){
   $query .= " , ".queryToRank($link, $searchquery) ;
