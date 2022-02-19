@@ -66,29 +66,41 @@ function parseurl($url){
 
 
 function queryToRank($link, $input){
+  $queriedfields=['textupdates.content', 'posts.title']; 
   $input=htmlspecialchars_decode($input);
   $sumterms=[]; 
+  $whereterms=[];
   $sepqs=array_filter(explode('"', $input), fn ($x)=>$x);
-  for ($x=0;$x<count($sepqs);$x++){
+  foreach($sepqs as $x=>$spval){
     if ($x % 2){
-      $sumterms[] = sumTerm($link, $sepqs[$x]);
+      $sumterms[] = sumTerm($link, $spval);
+      $tmpwts=[];
+      foreach ($queriedfields as $tmpqf){
+        $tmpwts[]=" LOWER(${tmpqf}) LIKE LOWER(\"%${spval}%\") ";
+      }
+      $whereterms[]=' AND ('.implode(" OR ",$tmpwts).' ) ';
     } else {
-
-      $subinputs=array_filter(explode(' ', $sepqs[$x]), fn ($x)=>$x);
+      $subinputs=array_filter(explode(' ', $spval), fn ($x)=>$x);
       foreach ($subinputs as $subi){
-        $fuzzyterms = getLevenshtein1($subi);
-        $queriedfields=['textupdates.content', 'posts.title']; 
+        $fuzzyterms = getLevenshtein($subi);
+        //$fuzzierterms = getLevenshtein($subi,2); too much
         foreach ($queriedfields as $cfield){
-          $sumterms[]=makeTerm($cfield, $subi);
+          $relevance=(1.2**min(strlen($subi), 10)/1.2**10)-(strlen($subi) <4 ? 0.1 : 0);
+          $sumterms[]=makeTerm($cfield, $subi, false, $relevance);
           foreach ($fuzzyterms as $fuzzi){
-            $sumterms[]=makeTerm($cfield, $fuzzi, $regexp=true, $relevance=0.6);
+            if (strlen($fuzzi)>3){
+              $sumterms[]=makeTerm($cfield, $fuzzi, true, $relevance**1.7); //TODO relevance hashmap?
+            }
           }
-        }        
+          //foreach ($fuzzierterms as $fuzzi){
+          //  $sumterms[]=makeTerm($cfield, $fuzzi, $regexp=true, $relevance=0.1);
+          //}
+        }        //min e^n e^15 / e^15
       }
 
     }
   }
-  return " SUM( " . implode(" + ", $sumterms) . " ) AS relevance " ;
+  return [" SUM( " . implode(" + ", $sumterms) . " ) AS relevance ", implode("",$whereterms)] ;
 }
 
 
@@ -110,32 +122,39 @@ function makeTerm($queryfield, $subsubqueryval, $regexp=false, $relevance=1){
   return "(((LENGTH(".($regexp ? "@temptext" : "LOWER(${queryfield})").") - LENGTH(@temptext:=(".($regexp ? "REGEXP_REPLACE" : "REPLACE")."(".($regexp ? "@temptext" : "LOWER(${queryfield})").", LOWER('${subsubqueryval}'), ''))))/LENGTH('${subsubqueryval}'))*${relevance})";
 }
 
-function getLevenshtein1($word){
-    $words = array();
-    for ($i = 0; $i < strlen($word); $i++) {
-        // insertions
-        $words[] = substr($word, 0, $i) . '.' . substr($word, $i);
-        // deletions
-        $words[] = substr($word, 0, $i) . substr($word, $i + 1);
-        // substitutions
-        $words[] = substr($word, 0, $i) . '.' . substr($word, $i + 1);
+function getLevenshtein($inputword, $depth=1){
+  $words = [$inputword=>true];
+
+  for ($j = 0; $j < $depth; $j++) {
+    foreach ($words as $word=>$truth){
+      for ($i = 0; $i < strlen($word); $i++) {
+          // insertions
+          $words[substr($word, 0, $i) . '.' . substr($word, $i)] = true ;
+          // deletions
+          $words[substr($word, 0, $i) . substr($word, $i + 1)] = true ;
+          // substitutions
+          $words[substr($word, 0, $i) . '.' . substr($word, $i + 1)] =  true;
+      }
+      // last insertion
+      $words[$word . '.'] = true;
     }
-    // last insertion
-    $words[] = $word . '.';
-    return $words;
+  }
+  return array_keys($words);
 }
 
 
 $whereclause= getpost("category") ? parseurl(getpost("category")) : "1";
 $searchquery= getpost("q") ?? false;
-
+$rankquery=queryToRank($link, $searchquery);
+$sumquery=$rankquery[0];
+$whereclause.=$rankquery[1];
 
 //no more inline ifs this is hard enough to read on its own.
 $query="SET @temptext :='';";
 qq($link, $query);
 $query="SELECT ". ( debug ? getcols($link) : " posts.id  ");
 if ($searchquery){
-  $query .= " , ".queryToRank($link, $searchquery) ;
+  $query .= " , ".$sumquery ;
 }
 $query .= $posts_data_inners;
 $query .= " WHERE textupdates.replaced_at IS NULL AND ${whereclause} ";
@@ -159,6 +178,3 @@ if ($searchquery){
 
 echo json_encode(array_map( function($x){return $x['p_id'];} , $result )); 
 
-echo "<br>";
-echo "<br>";
-echo $query;
