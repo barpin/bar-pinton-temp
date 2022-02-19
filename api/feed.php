@@ -58,7 +58,6 @@ function parseurl($url){
       }
     }
   $query.= segmenttonumber($url) . " ) ";
-  //echo "<b>${query}</b>";
  
   return $query;
 }
@@ -142,9 +141,9 @@ function getLevenshtein($inputword, $depth=1){
   return array_keys($words);
 }
 
-
-$whereclause= getpost("category") ? parseurl(getpost("category")) : "1";
-$searchquery= getpost("q") ?? false;
+$categoryquery = $categoryquery ?? getpost("category");
+$whereclause= $categoryquery ? parseurl($categoryquery) : "1";
+$searchquery = $searchquery ?? getpost("q");
 $rankquery=queryToRank($link, $searchquery);
 $sumquery=$rankquery[0];
 $whereclause.=$rankquery[1];

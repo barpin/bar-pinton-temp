@@ -1,4 +1,4 @@
-<?php
+<?php //Copyright (c) 2021 <info@phprouter.com> MIT licence
 
 session_start();
 function prdebug(){echo "<br><br><pre>";var_dump($_SESSION);echo "</pre><br><br><pre>";var_dump($_POST);}

@@ -27,9 +27,7 @@ function queryAndPush($link, $query){
     echo json_encode($json);
 };
 
-function getpost($varname){
-    return $_GET[$varname] ?? $_POST[$varname] ?? false; //this should have been null but its too late now
-}
+
 
 function assertExitCode($assertion, $code){
     if ($assertion){

@@ -77,6 +77,7 @@ any('/login',           'controllers/c_login.php');
 any('/logout',          'controllers/c_logout.php');
 any('/registrar',       'controllers/c_register.php');
 any('/busqueda',        'controllers/c_search.php');
+any('/search',        'controllers/c_search.php');
 any('/editar',          'controllers/c_edit.php');
 any('/editar/$article', 'controllers/c_edit.php');
 any('/rss',             'controllers/c_rss.php');

@@ -48,8 +48,14 @@ function getcols($link){
     
     return rtrim($colstr, ", ").", users.id as u_id, IFNULL(users.nickname, users.name) as u_name ";
 }
+
+function getpost($varname){
+    return $_GET[$varname] ?? $_POST[$varname] ?? false; //this should have been null but its too late now
+}
+
 $posts_data_inners= " FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id INNER JOIN users ON users.id = textupdates.author_id ";
 
 $posts_data_query="SELECT ".getcols($link).$posts_data_inners;
 
+$allcategoriesassoc=entries($link, "SELECT * FROM categories", false, "id");
 
