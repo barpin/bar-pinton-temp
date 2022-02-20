@@ -18,7 +18,7 @@ $showcategories=1;
 $snippetdirection=$snippetdirection ?? "vertical";
 
 $content['t_content']=htmlspecialchars_decode($content['t_content']);
-$content['t_css']=htmlspecialchars_decode($content['t_css']);
+$content['t_css']=isset($content['t_css']) ? htmlspecialchars_decode($content['t_css']): null;
 
 if ($displayas=="fullpage"){
     $viewdetails=0;
