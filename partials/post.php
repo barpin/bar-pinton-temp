@@ -1,4 +1,4 @@
-<div class="articlebody" id="art-<?= $content['p_id'] ?>" style="<?= $margins ? "width:65%; margin: 10px auto;" : "" ?><?= $redback ? "background-color:rgba(245, 0, 0, 0.5);" : "" ?><?= $articleborder ? "padding: 3vw;border-radius: 3vw;border: 1px solid #333;" : "" ?>"  >
+<div class="articlebody" id="art-<?= $content['p_id'] ?>-<?= $content['t_id'] ?>" style="<?= $margins ? "width:65%; margin: 10px auto;" : "" ?><?= $redback ? "background-color:rgba(245, 0, 0, 0.5);" : "" ?><?= $articleborder ? "padding: 3vw;border-radius: 3vw;border: 1px solid #333;" : "" ?>"  >
     <div class="dotsdropdown" tabindex="0" role="button" onmousedown="var tthis = this;if (tthis.matches(':focus')){setTimeout(()=>{tthis.blur()}, 1)};"> 
         <div class="dots">
             <div class="dot"></div>
@@ -29,6 +29,23 @@
 
         </div>
     </div>
+    <?php if ($shadowcontain){ ?>
+        <template>
+            <link href="http://cecs.localhost/cdn/tailwind.min.css" rel="stylesheet">
+            <link href="/css/main.css" rel="stylesheet">
+            <style><?= $shadowstyle ?></style>
+            <?= $shadowcontent ?>
+        </template>
+        <div class="snippetpreview" style="transform:scale(0.3);transform-origin: left top;width:90vw;height:50vw;overflow:hidden;position:absolute;"></div>
+        <div class="snippetcover" style="transform-origin: left top;width:27vw;height:15vw;"></div>
+        
+        <script>
+            carticle=document.querySelector("#art-<?= $content['p_id'] ?>-<?= $content['t_id'] ?>");
+            shadowroot=carticle.querySelector(".snippetpreview").attachShadow({mode: 'open'});
+            shadowroot.appendChild(carticle.querySelector("template").content);
+        </script>
+    <?php } ?>
+
     <h5 class="text-center"><?= $title ? $content['p_title'] : "" ?></h1>
     <style><?= $content['t_css'] ?></style>
     <?php if ($dates){ ?>
@@ -60,10 +77,10 @@
     <?php } ?>
 
     <?php if ($votephase){ ?>
-        <div  class="inline-flex m-1 p-1 containerborder rounded">
+        <div  class="inline-flex flex-wrap m-1 p-1 containerborder rounded">
         <?php foreach ($voteoptions as $vnum=>$vvote) { ?>
             <div class="inline-flex flex-col containerborder rounded m-1 p-1 ">
-                <button <?= $votephase==2 ? "disabled" : 'onclick="submitvote({id:'.$content['p_id'].',vote:'. $vnum.'})"' ?> class="containerborder rounded m-1 p-1 bg-sky-300 ">
+                <button <?= $votephase==2 ? "disabled" : 'onclick="submitvote({id:'.$content['p_id'].',vote:'. $vnum.'})"' ?> class="containerborder rounded m-1 p-1 <?= $votephase==2 ? "bg-gray-200" : "bg-blue-300 hover:bg-blue-600 transition duration-150 ease-in-out" ?> ">
                     <?= $vvote ?>
                 </button>
                 <span class="text-center text-sm text-gray-400"><?= $votephase==2 ? ($votesresults[$vnum]['OccurenceValue']-1)." votos" : "" ?></span>

@@ -1,7 +1,7 @@
 <?php
 $title="Busqueda";
 $headertags="<link href='/css/feed.css' rel='stylesheet'><script src='/js/dropdownfuncs.js' defer>";
-
+/*
 function curl_get_contents($url)
 {
     $ch = curl_init();
@@ -15,6 +15,48 @@ function curl_get_contents($url)
     curl_close($ch);
 
     return $data;
+}*/
+
+function stripos_any($needles, $haystack, $offset=0){
+  
+  if (strlen($haystack)<=$offset){
+    return false;
+  } else {
+    $lowestneedle="";
+    $lowestneedlepos=strlen($haystack);
+    foreach($needles as $needle){
+        if (((($nstripos=stripos($haystack, $needle, $offset))!==false) && $nstripos<$lowestneedlepos) || ($nstripos==$lowestneedlepos && strlen($needle)>strlen($lowestneedle))){
+            $lowestneedlepos=$nstripos;
+            $lowestneedle=$needle;
+        } 
+    }
+
+    if ($lowestneedlepos==strlen($haystack)){
+        $lowestneedlepos=false;
+    }
+    return [$lowestneedlepos,$lowestneedle];
+  }
+}
+
+function mb_stripos_any($needles, $haystack, $offset=0){
+  
+  if (mb_strlen($haystack)<=$offset){
+    return false;
+  } else {
+    $lowestneedle="";
+    $lowestneedlepos=mb_strlen($haystack);
+    foreach($needles as $needle){
+        if (((($nstripos=mb_stripos($haystack, $needle, $offset))!==false) && $nstripos<$lowestneedlepos) || ($nstripos==$lowestneedlepos && mb_strlen($needle)>mb_strlen($lowestneedle))){
+            $lowestneedlepos=$nstripos;
+            $lowestneedle=$needle;
+        } 
+    }
+
+    if ($lowestneedlepos==mb_strlen($haystack)){
+        $lowestneedlepos=false;
+    }
+    return [$lowestneedlepos,$lowestneedle];
+  }
 }
 
 require_once 'assets/session_start.php';
@@ -22,6 +64,7 @@ require_once 'assets/database.php';
 
 $categoryquery=getpost('c');
 $searchquery=getpost('q');
+$showreplaced=false;
 ob_start();
 include('api/feed.php');
 $apijson = ob_get_contents();
@@ -29,13 +72,13 @@ ob_end_clean();
 
 $posts=json_decode($apijson);
 
-$resultsquery=$posts_data_query."WHERE ";
+$resultsquery=$posts_data_query."WHERE ( ";
 foreach ($posts as $ipost){
   $resultsquery.=" posts.id = ${ipost} OR ";
 }
-$resultsquery.=0;
+$resultsquery.="0 ) ".($showreplaced ? "" : " AND replaced_at IS NULL");
 $results=entries($link, $resultsquery);
-$displayas="infeed";
+$displayas="searchresult";
 
 require_once 'partials/documenthead.php';
 include_once 'partials/navbar.php';

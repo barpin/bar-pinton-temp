@@ -16,8 +16,11 @@ $viewhist=1;
 $viewdetails=1;
 $showcategories=1;
 $snippetdirection=$snippetdirection ?? "vertical";
+$shadowcontain=false;
+$shortenstrip=false;
 
-$content['t_content']=htmlspecialchars_decode($content['t_content']);
+
+$content['t_content']=isset($content['t_content']) ? htmlspecialchars_decode($content['t_content']):null;
 $content['t_css']=isset($content['t_css']) ? htmlspecialchars_decode($content['t_css']): null;
 
 if ($displayas=="fullpage"){
@@ -41,6 +44,7 @@ if ($displayas=="fullpage"){
             break;
     }
 } else if ($displayas=="infeed") {
+    $articleborder=1;
     switch ($category){
         case 4: //post
             break;
@@ -49,6 +53,7 @@ if ($displayas=="fullpage"){
         case 16: //voto
             break;
         case 32: //alerta
+            $redback=1;
             break;
     }
 } else if ($displayas=="inhist") {
@@ -127,6 +132,7 @@ if ($category==16){
 if ($showcategories){
     $parentcats=0;
     $tempcatassoc=[];
+    /*
     $showncategoryarr=[];
     foreach ($allcategoriesassoc as $fcatid=>$fcat){
         if ( ((2**gmp_init($fcatid)) & $content['p_category'])!=0 ){
@@ -142,9 +148,106 @@ if ($showcategories){
             $showncategoryarr[$fcatid]=$fcat;
 
         }
-    }
+    }*/
     $showncategoryarr=$tempcatassoc;
 }
+
+
+if ($shadowcontain){
+    $snippetlength=400;
+    $strippedtags= htmlspecialchars_decode( strip_tags($content['t_content']));
+    $shadowcontent=$content['t_content'];
+    $shadowstyle=$content['t_css'];
+    if (isset($searchquery)){
+        
+        
+
+        $matches=[];
+        $subqueries=[];
+        $tempcontent=$strippedtags;
+        $tempcontent2=$strippedtags;
+        foreach (explode('"', $searchquery) as $subqid=>$subqval){
+            if ($subqval){
+                if ($subqid % 2 == 0){
+                    foreach (explode(' ', $subqval) as $ssubqval){
+                        if ($ssubqval){
+                            $subqueries[]=$ssubqval;
+                        }
+                    }
+            } else {
+                    $subqueries[]=$subqval;
+                }
+            }
+        }
+
+        
+
+        $offset=0;
+        $submatches=[];
+
+        
+        while (($tpos=mb_stripos_any($subqueries, $tempcontent2, $offset))[0]!==false){
+            $submatches[]=$tpos;
+            $offset+=$tpos[0]+mb_strlen($tpos[1]);
+        }
+        
+
+        if (0 < count($submatches)){
+            $wordsaccounted=0;
+            $tbcarr=[$tempcontent2];
+            while ($wordsaccounted < count($submatches) && !empty(count( array_filter($tbcarr, fn ($x)=>mb_strlen($x)>25)  )) ){
+                //$tmpstr=array_reduce($tbcarr, fn ($x,$y)=>$x.$y,"");
+                $originaloffset=100;
+                $offset=$originaloffset;
+                $tbcarr=[mb_substr($tempcontent2,0,$offset)." ... "];
+                $wordsaccounted++;
+
+                while (($tpos=mb_stripos_any($subqueries, $tempcontent2,$offset))[0]){
+                    $subsnippetlength=(($snippetlength-$originaloffset-mb_strlen(array_reduce(array_slice($submatches,0,$wordsaccounted), fn ($x,$y)=>$x.$y[1],"") ) )/$wordsaccounted/2 );
+                    $startat=max($offset,$tpos[0]-$subsnippetlength);
+                    $combinedlength=$subsnippetlength*2+mb_strlen($tpos[1]);
+                    $tbcarr[]=mb_substr($tempcontent2, $startat,$combinedlength )." ... ";
+                    $offset=$startat+$combinedlength+5;
+                }
+                
+            }
+            $tempcontent=array_reduce($tbcarr, fn ($x,$y)=>$x.$y,"");
+            
+        } else {
+            $tempcontent=mb_substr($strippedtags,0,$snippetlength).(mb_substr($strippedtags,$snippetlength) ? "..." : "");
+        }
+        /*
+        $nummatches="";
+        foreach($subqueries as $subquery){
+            $nummatches+=substr_count(strtoupper( $tempcontent),strtoupper($subquery));
+        }
+
+        $sumtempcontent="";
+        $nummatches=min($nummatches,8);
+        $charcounter=0;
+        $matchcounter=0;
+        while (($tpos=stripos_any($subqueries, $tempcontent2, $charcounter))[0]!==false){
+            $charcounter+=$tpos[0]+strlen($tpos[1]); //TOTALLY UNFINISHED, QUERY GIGHLIGHTRER AND EMPTY SPACE DELETER, THIS IS PROBABLY A BAD APPROACH
+            $sumtempcontent+=substr($tempcontent, max(0, $tpos[0]-$snippetlength/$nummatches/2), $snippetlength/$nummatches/2+$tpos[0])   
+        }
+        //for ($x=0;$x<min($nummatches, 6);$x++){
+        //    ;
+        //}
+
+        */
+        //$content['t_content']=mb_str_ireplace($subqueries, array_map(fn ($x)=>"<b>${x}</b>", $subqueries), $tempcontent);
+        $content['t_content']=preg_replace(array_map(fn ($x)=>"/".preg_quote($x)."/ui", $subqueries), array_map(fn ($x)=>"<b>${x}</b>", $subqueries), $tempcontent);
+        
+//exit;
+
+        //$a=substr_count(strtoupper($haystack), strtoupper($needle));
+    } else {
+        $content['t_content']=mb_substr($strippedtags,0,$snippetlength).(mb_substr($strippedtags,$snippetlength) ? "..." : "");
+    }
+    $content['t_css']="";
+}
+
+
 
 include 'partials/post.php';
 

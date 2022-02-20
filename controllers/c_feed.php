@@ -2,7 +2,7 @@
 //$url = strpos($_SERVER['REQUEST_URI'], "?")===false ? $_SERVER['REQUEST_URI'] :  strstr($_SERVER['REQUEST_URI'],"?",true);
 include 'assets/ver.php';
 require_once 'assets/database.php';
-$headertags="<link href='/css/feed.css' rel='stylesheet'><script src='/js/dropdownfuncs.js?version=${ver}' defer></script>";
+$headertags="<link href='/css/feed.css?version=${ver}' rel='stylesheet'><script src='/js/dropdownfuncs.js?version=${ver}' defer></script>";
 $archive= isset($archive) ? $archive : false;
 
 if (isset($feedany)){

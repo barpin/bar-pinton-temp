@@ -82,3 +82,12 @@ h1, h2, h3, h4, h5, h6{
 .containerborder{
   border: 1px solid #888;
 }
+/*
+.snippetpreview {
+  transform: scale(0.1, 0.1);
+  -ms-transform: scale(0.1, 0.1); 
+  -webkit-transform: scale(0.1, 0.1); 
+  -o-transform: scale(0.1, 0.1); 
+    -moz-transform: scale(0.1, 0.1);
+}
+*/
