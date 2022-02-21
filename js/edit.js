@@ -184,6 +184,7 @@ function saverecipe(event){
     if (currenteditor){
         editor.then(x=>{return (x.getData())}).then(x=>{
             formData.set("content", x);
+            formData.set("css", t_css);
             postform(formData);
         });
     } else {
