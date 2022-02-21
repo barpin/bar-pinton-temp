@@ -62,8 +62,8 @@ function mb_stripos_any($needles, $haystack, $offset=0){
 require_once 'assets/session_start.php';
 require_once 'assets/database.php';
 
-$categoryquery=getpost('c');
-$searchquery=getpost('q');
+$categoryquery=sanitize($link, getpost('c'));
+$searchquery=sanitize($link, getpost('q'));
 $showreplaced=false;
 ob_start();
 include('api/feed.php');

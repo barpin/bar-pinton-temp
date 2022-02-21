@@ -1,7 +1,8 @@
+<?php include_once 'assets/database.php'; ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a href="/" style="height:50px;width:50px">
-      <img src="/img/logo.jpg" alt="">
+    <a href="/" style="height:50px;width:50px;margin-right:10px;">
+      <img src="/img/school_logo.png" alt="Logo">
     </a>
     <a class="navbar-brand" href="/">C.E.C.S.</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,28 +39,40 @@
 
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link font-sans" href="/comisiones">Comisiones</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link font-sans" href="/clubes">Clubes</a>
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Secretarias
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item font-sans" href="/secretarias">Secretarias</a></li>
-            <li><a class="dropdown-item font-sans" href="/secretaria/internos">Secretaria de asuntos internos</a></li>
-            <li><a class="dropdown-item font-sans" href="/secretaria/finanzas">Secretaria de finanzas</a></li>
-            <li><a class="dropdown-item font-sans" href="/secretaria/genero">Secretaria de género</a></li>
-            <li><a class="dropdown-item font-sans" href="/secretaria/cultura">Secretaria de cultura</a></li>
-            <li><a class="dropdown-item font-sans" href="/secretaria/estudiantiles">Secretaria de nota y asuntos estudiantiles</a></li>
-            <li><a class="dropdown-item font-sans" href="/secretaria/edilicios">Secretaria de asuntos edilicios</a></li>
-            <li><a class="dropdown-item font-sans" href="/secretaria/prensa">Secretaria de prensa y difusión</a></li>
-            <li><a class="dropdown-item font-sans" href="/secretaria/noche">Secretaria del turno noche</a></li>
+            <?php foreach ($allcategoriesassoc as $nsecretaria){ if ((gmp_init($nsecretaria['parents']) & 0b1000000) != 0){ ?>
+              <li><a class="dropdown-item font-sans" href="/secretaria/<?= $nsecretaria['urlname'] ?>"><?= $nsecretaria['name'] ?></a></li>
+            <?php } } ?>
           </ul>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Comisiones
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item font-sans" href="/comisiones">Comisiones</a></li>
+            <?php foreach ($allcategoriesassoc as $ncomision){ if ((gmp_init($ncomision['parents']) & 0b10000000) != 0){ ?>
+              <li><a class="dropdown-item font-sans" href="/comision/<?= $ncomision['urlname'] ?>"><?= $ncomision['name'] ?></a></li>
+            <?php } } ?>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Clubes
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item font-sans" href="/clubes">Clubes</a></li>
+            <?php foreach ($allcategoriesassoc as $nclub){ if ((gmp_init($nclub['parents']) & 0b100000000) != 0){ ?>
+              <li><a class="dropdown-item font-sans" href="/club/<?= $nclub['urlname'] ?>"><?= $nclub['name'] ?></a></li>
+            <?php } } ?>
+          </ul>
+        </li>
+        
         <?php if (!$loggedin){ ?>
         <li class="nav-item">
           <a class="nav-link font-sans" href="/login">Iniciar sesion</a>
@@ -76,9 +89,9 @@
             <li><a class="dropdown-item font-sans" href="/logout">Cerrar sesion</a></li>
             <?php $_userperms=gmp_init($_SESSION['perms']); ?>
             <?= ($_userperms) != 0 ? '<li><a class="dropdown-item font-sans" href="/editar">Nuevo Post</a></li>' : "" ?>
-            <?= ($_userperms & 0b10000000000) == 0b10000000000 ? '<li><a class="dropdown-item font-sans" href="/admin/codes">Administrar Codigos</a></li>' : "" ?>
-            <?= ($_userperms & 0b100000000000) == 0b100000000000 ? '<li><a class="dropdown-item font-sans" href="/admin/users">Administrar Usuarios</a></li>' : "" ?>
-            <?= ($_userperms & 0b1000000000000) == 0b1000000000000 ? '<li><a class="dropdown-item font-sans" href="/admin/cats">Administrar Categorias</a></li>' : "" ?>
+            <?= ($_userperms & 0b10000000000) != 0 ? '<li><a class="dropdown-item font-sans" href="/admin/codes">Administrar Codigos</a></li>' : "" ?>
+            <?= ($_userperms & 0b100000000000) != 0 ? '<li><a class="dropdown-item font-sans" href="/admin/users">Administrar Usuarios</a></li>' : "" ?>
+            <?= ($_userperms & 0b1000000000000) != 0 ? '<li><a class="dropdown-item font-sans" href="/admin/cats">Administrar Categorias</a></li>' : "" ?>
           </ul>
         </li>
         <?php } ?>

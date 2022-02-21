@@ -81,6 +81,6 @@ foreach($_GET as $varname=>$varval){
         //echo $varname." ".$varval." ".json_decode($varval)."\n";
     }
 }
-
+$type=str_replace(["/","."],"",$type);
 require_once "api/${type}.php";
 exit;
