@@ -280,5 +280,8 @@ if (!isnew){
         i_enddate.value=p_end_date;
         JSON.parse(p_options).forEach(x=>addvoteoption(x, "disabled"));
     }
+    if (t_css && t_css!="/*SET:DEFAULT*/"){
+        sethtmleditor();
+    }
 }
 refreshcats();

@@ -16,8 +16,10 @@
 			<?php } ?>
 		</div>
 		<br><br>
-		<span class="text-xl">Contenido</span> 
-		<button type='button' id="editas" onclick="swapeditor()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar como HTML</button>
+		<div class="flex flex-wrap justify-around	w-100%">
+		<span class="text-xl block">Contenido</span> 
+		<button type='button' id="editas" onclick="swapeditor()" class="block mr-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar como HTML</button>
+		</div>
 		<div id="form2" class="form2 flex flex-wrap justify-around">
 			<div name="texto" id="editor"></div>
 		</div>

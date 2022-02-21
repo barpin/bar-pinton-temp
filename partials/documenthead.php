@@ -4,13 +4,13 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title><?= $title ?? "Centro de estudiantes de la Confederacion Suiza" ?></title>
-    <link href="http://cecs.localhost/cdn/bootstrap.min.css" rel="stylesheet">
-    <script src="http://cecs.localhost/cdn/bootstrap.bundle.min.js" ></script>
-    <link href="http://cecs.localhost/cdn/tailwind.min.css" rel="stylesheet">
-    <script src="http://cecs.localhost/cdn/sweetalert2@11.js" defer></script>
+    <link href="/cdn/bootstrap.min.css" rel="stylesheet">
+    <script src="/cdn/bootstrap.bundle.min.js" ></script>
+    <link href="/cdn/tailwind.min.css" rel="stylesheet">
+    <script src="/cdn/sweetalert2@11.js" defer></script>
     <link rel="shortcut icon" href="favicon.ico">
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="http://cecs.localhost/cdn/ionicons.js"></script>
+    <script nomodule src="/cdn/ionicons.js"></script>
     <?php /*
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">

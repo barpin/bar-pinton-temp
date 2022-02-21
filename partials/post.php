@@ -38,7 +38,7 @@
     </div>
     <?php if ($shadowcontain){ ?>
         <template>
-            <link href="http://cecs.localhost/cdn/tailwind.min.css" rel="stylesheet">
+            <link href="/cdn/tailwind.min.css" rel="stylesheet">
             <link href="/css/main.css" rel="stylesheet">
             <?php $displaysnippet(); ?>
         </template>

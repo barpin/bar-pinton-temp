@@ -4,21 +4,21 @@ include 'assets/ver.php';
 $title="Editando articulo";
 $headertags=<<<EOF
     
-    <script src="http://cecs.localhost/cdn/ckeditor.js" defer></script>
-    <script src="http://cecs.localhost/cdn/codemirror.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/show-hint.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/htmlmixed.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/css.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/xml.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/javascript.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/xml-hint.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/html-hint.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/css-hint.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/javascript-hint.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/active-line.min.js" defer></script>
-    <script src="http://cecs.localhost/cdn/matchbrackets.min.js" defer></script>
-    <link rel="stylesheet" href="http://cecs.localhost/cdn/codemirror.min.css" integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="http://cecs.localhost/cdn/show-hint.min.css" integrity="sha512-OmcLQEy8iGiD7PSm85s06dnR7G7C9C0VqahIPAj/KHk5RpOCmnC6R2ob1oK4/uwYhWa9BF1GC6tzxsC8TIx7Jg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="/cdn/ckeditor.js" defer></script>
+    <script src="/cdn/codemirror.min.js" defer></script>
+    <script src="/cdn/show-hint.min.js" defer></script>
+    <script src="/cdn/htmlmixed.min.js" defer></script>
+    <script src="/cdn/css.min.js" defer></script>
+    <script src="/cdn/xml.min.js" defer></script>
+    <script src="/cdn/javascript.min.js" defer></script>
+    <script src="/cdn/xml-hint.min.js" defer></script>
+    <script src="/cdn/html-hint.min.js" defer></script>
+    <script src="/cdn/css-hint.min.js" defer></script>
+    <script src="/cdn/javascript-hint.min.js" defer></script>
+    <script src="/cdn/active-line.min.js" defer></script>
+    <script src="/cdn/matchbrackets.min.js" defer></script>
+    <link rel="stylesheet" href="/cdn/codemirror.min.css" integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/cdn/show-hint.min.css" integrity="sha512-OmcLQEy8iGiD7PSm85s06dnR7G7C9C0VqahIPAj/KHk5RpOCmnC6R2ob1oK4/uwYhWa9BF1GC6tzxsC8TIx7Jg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 
@@ -50,6 +50,7 @@ $headertags=<<<EOF
 
 
 <link href="/css/edit.css?${ver}" rel="stylesheet">
+<script src="/js/lib.js?${ver}"></script>
 <script src="/js/edit.js?${ver}" defer></script>
 
 EOF;
