@@ -22,8 +22,8 @@ function qq ($link, $query, $exitCode=false){
     return $tres;
 }
 
-function entries ($link, $query, $fetchrow = false, $assoc=false){
-    $entries=qq($link, $query);
+function entries ($link, $query, $fetchrow = false, $assoc=false, $exitCode=false){
+    $entries=qq($link, $query, $exitCode);
     $entryarr=[];
     while($row= $fetchrow ? $entries->fetch_row() : $entries->fetch_assoc()){
         if ($assoc){

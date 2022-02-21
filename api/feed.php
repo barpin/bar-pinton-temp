@@ -3,8 +3,8 @@
 //ejemplo ..../api/v1/feed?Voto.noche   devuelve la lista de todos los votos de la secretaria de turno noche
 //ejemplo ..../api/v1/feed?category=2,!(3.Comision.genero).!7  devuelve la lista de todos los posts de categoria 1 (2^1=2), y los que o no son de ni la categoria 3, ni de alguna comisio, ni de de la secretaria de genero  o no son de las categorias 0, 1, o 2 (2^7= 2^0 | 2^1 | 2^2)
 
-define("urlcategoryarr", entries($link, "SELECT * FROM categories", false, "urlname"));
-define("namecategoryarr", entries($link, "SELECT * FROM categories", false, "name"));
+define("urlcategoryarr", entries($link, "SELECT * FROM categories", false, "urlname", "500 Internal Server Error"));
+define("namecategoryarr", entries($link, "SELECT * FROM categories", false, "name", "500 Internal Server Error"));
 
 
   
@@ -150,7 +150,7 @@ $whereclause.=$rankquery[1];
 
 //no more inline ifs this is hard enough to read on its own.
 $query="SET @temptext :='';";
-qq($link, $query);
+qq($link, $query, "500 Internal Server Error");
 $query="SELECT ". ( debug ? getcols($link) : " posts.id  ");
 if ($searchquery){
   $query .= " , ".$sumquery ;
@@ -170,9 +170,9 @@ function idecho($y){
 }
 
 if ($searchquery){
-  $result=array_filter(entries($link, $query), fn ($x)=>floatval($x['relevance']));
+  $result=array_filter(entries($link, $query, false, false, "500 Internal Server Error"), fn ($x)=>floatval($x['relevance']));
 } else {
-  $result=entries($link, $query);
+  $result=entries($link, $query, false, false, "500 Internal Server Error");
 }
 
 echo json_encode(array_map( function($x){return $x['p_id'];} , $result )); 

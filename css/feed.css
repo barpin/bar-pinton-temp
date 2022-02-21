@@ -1,5 +1,5 @@
 .articlecontainer{
-    width: 70vw;
+    width: max(70vw, min(90%,350px));
     margin: auto;
     display: flex;
     flex-direction: column;

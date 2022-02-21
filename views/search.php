@@ -3,7 +3,7 @@
 <div class="articlecontainer">
 
     <?php foreach ($results as $content) { ?>
-        <div class="post">
+        <div class="">
             <?php include 'controllers/c_partial_article.php'; ?>
         </div>
     <?php } ?>

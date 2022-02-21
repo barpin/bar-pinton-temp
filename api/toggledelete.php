@@ -6,7 +6,7 @@ $userperms=$userdata[1];
 
 assertExitCode(!isset($_POST['id']), "404 Not Found");
 
-$postdataobj=qq($link, $posts_data_query."WHERE posts.id = ${_POST['id']}");
+$postdataobj=qq($link, $posts_data_query."WHERE posts.id = ${_POST['id']}", "500 Internal Server Error");
 
 assertExitCode($postdataobj->num_rows==0, "404 Not Found");
 $postdata=$postdataobj->fetch_assoc();
@@ -21,5 +21,5 @@ if ((($postdata['p_category'] & 512) == 512) && $postdata['p_deleted_at']){
   assertExitCode(1, "409 Conflict");
 }
 
-qq($link, $query);
+qq($link, $query, "500 Internal Server Error");
 echo 1;

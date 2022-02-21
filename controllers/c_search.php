@@ -20,7 +20,7 @@ function curl_get_contents($url)
 function stripos_any($needles, $haystack, $offset=0){
   
   if (strlen($haystack)<=$offset){
-    return false;
+    return [false,""];
   } else {
     $lowestneedle="";
     $lowestneedlepos=strlen($haystack);
@@ -41,7 +41,7 @@ function stripos_any($needles, $haystack, $offset=0){
 function mb_stripos_any($needles, $haystack, $offset=0){
   
   if (mb_strlen($haystack)<=$offset){
-    return false;
+    return [false,""];
   } else {
     $lowestneedle="";
     $lowestneedlepos=mb_strlen($haystack);

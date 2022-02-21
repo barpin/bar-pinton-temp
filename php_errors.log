@@ -1,0 +1,11 @@
+[20-Feb-2022 16:11:30 America/Chicago] PHP Notice:  Undefined variable: displaypost in /var/www/cecs/partials/post.php on line 36
+[20-Feb-2022 16:11:30 America/Chicago] PHP Fatal error:  Uncaught Error: Function name must be a string in /var/www/cecs/partials/post.php:36
+Stack trace:
+#0 /var/www/cecs/controllers/c_partial_article.php(267): include()
+#1 /var/www/cecs/views/search.php(7): include('/var/www/cecs/c...')
+#2 /var/www/cecs/controllers/c_search.php(85): require_once('/var/www/cecs/v...')
+#3 /var/www/cecs/router.php(56): include_once('/var/www/cecs/c...')
+#4 /var/www/cecs/router.php(20): route()
+#5 /var/www/cecs/routes.php(79): any()
+#6 {main}
+  thrown in /var/www/cecs/partials/post.php on line 36

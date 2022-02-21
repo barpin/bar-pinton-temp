@@ -11,7 +11,7 @@ $userid=$userdata[0];
 $userperms=$userdata[1]; //in case it was changed since last login
 
 if (isset($_POST['id'])){ //if editing (not creating new)
-    $postdataobj=qq($link, $posts_data_query."WHERE posts.id = ${_POST['id']}");
+    $postdataobj=qq($link, $posts_data_query."WHERE posts.id = ${_POST['id']}", "500 Internal Server Error");
 
     assertExitCode($postdataobj->num_rows==0, "404 Not Found");
     $postdata=$postdataobj->fetch_assoc();
@@ -21,13 +21,13 @@ if (isset($_POST['id'])){ //if editing (not creating new)
     $css = isset($_POST['css']) ? "'".$_POST['css']."'" : "null";
     
     $query="UPDATE textupdates SET replaced_at = NOW() WHERE post_id = ${_POST['id']} AND replaced_at IS NULL";
-    qq($link, $query);
+    qq($link, $query, "500 Internal Server Error");
     
     $query="INSERT INTO textupdates VALUES(null, ${_POST['id']}, '${_POST['content']}', ${css},  ${_SESSION['id']}, NOW(), null)";
-    qq($link, $query);
+    qq($link, $query, "500 Internal Server Error");
     echo $_POST['id'];
 } else {
-    $globalCategories=entries($link, "SELECT * FROM categories", false, "id");
+    $globalCategories=entries($link, "SELECT * FROM categories", false, "id", "500 Internal Server Error");
     
     $addedpostcategories=gmp_init(0); //this one verifies if the user has all the required categories
     $parentcategories=gmp_init(0); //the parent categories of each of the categories
@@ -55,16 +55,16 @@ if (isset($_POST['id'])){ //if editing (not creating new)
     $postoptions = isset ($_POST['options']) ? "'".json_encode($_POST['options'])."'" : "null" ;
 
     $query= "INSERT INTO posts VALUES(null, '${_POST['title']}', NOW(), null, ${finalcategories}, ${end_date}, ${postoptions} ); ";
-    qq($link, $query);
+    qq($link, $query, "500 Internal Server Error");
     
-    $newpostID=qq($link, "SELECT MAX(id)  FROM  posts")->fetch_row()[0];
+    $newpostID=qq($link, "SELECT MAX(id)  FROM  posts", "500 Internal Server Error")->fetch_row()[0];
 
     $query="INSERT INTO textupdates VALUES(null, ${newpostID}, '${_POST['content']}', ${css}, ${_SESSION['id']}, NOW(), null)";
-    qq($link, $query);
+    qq($link, $query, "500 Internal Server Error");
 
     if (isset ($_POST['options'])){
         for ($x=0;$x<count($_POST['options']);$x++){
-            qq($link, "INSERT INTO votesresults VALUES (null, ${newpostID}, ${x})");
+            qq($link, "INSERT INTO votesresults VALUES (null, ${newpostID}, ${x})", "500 Internal Server Error");
         }
     }
 

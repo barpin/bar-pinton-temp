@@ -15,7 +15,9 @@ $restore=0;
 $viewhist=1;
 $viewdetails=1;
 $showcategories=1;
-$snippetdirection=$snippetdirection ?? "vertical";
+$snippetdirection="";
+$vsnippet=false;
+$hsnippet=false;
 $shadowcontain=false;
 $shortenstrip=false;
 
@@ -76,6 +78,8 @@ if ($displayas=="fullpage"){
             break;
     }
 } else if ($displayas=="snippet") {
+    $snippetdirection="vertical";
+    $vsnippet=true;
     $shadowcontain=true;
     $shortenstrip=true;
 
@@ -93,6 +97,7 @@ if ($displayas=="fullpage"){
 } else if ($displayas=="searchresult") {
     $shadowcontain=true;
     $shortenstrip=true;
+    $hsnippet=true;
     $snippetdirection="horizontal";
     $searchquery=$searchquery ?? null; //this does nothing i think but listing everything passed on is a good idea
     switch ($category){
@@ -132,7 +137,7 @@ if ($category==16){
 if ($showcategories){
     $parentcats=0;
     $tempcatassoc=[];
-    /*
+    
     $showncategoryarr=[];
     foreach ($allcategoriesassoc as $fcatid=>$fcat){
         if ( ((2**gmp_init($fcatid)) & $content['p_category'])!=0 ){
@@ -140,7 +145,7 @@ if ($showcategories){
             $tempcatassoc[$fcatid]=$fcat;
         }
     }
-    
+    /*
     foreach ($tempcatassoc as $fcatid=>$fcat){
         //echo "<br> ".$fcatid." ".$fcat." ".$parentcats." ";
 
@@ -152,8 +157,17 @@ if ($showcategories){
     $showncategoryarr=$tempcatassoc;
 }
 
+//if (!function_exists('savepost')){
+//    function savepost(){
+    
+//    }
+//}
 
 if ($shadowcontain){
+    $displaysnippet = function() use ($content, $link, $loggedin, $allcategoriesassoc){
+        $displayas="fullpage";
+        include 'controllers/c_partial_article.php';
+    };
     $snippetlength=400;
     $strippedtags= htmlspecialchars_decode( strip_tags($content['t_content']));
     $shadowcontent=$content['t_content'];
@@ -193,22 +207,22 @@ if ($shadowcontain){
         
 
         if (0 < count($submatches)){
+            $originaloffset=100;
             $wordsaccounted=0;
             $tbcarr=[$tempcontent2];
-            while ($wordsaccounted < count($submatches) && !empty(count( array_filter($tbcarr, fn ($x)=>mb_strlen($x)>25)  )) ){
+            while ($wordsaccounted < count($submatches) &&  ($snippetlength-$originaloffset)/(++$wordsaccounted)/2>25){
                 //$tmpstr=array_reduce($tbcarr, fn ($x,$y)=>$x.$y,"");
-                $originaloffset=100;
                 $offset=$originaloffset;
                 $tbcarr=[mb_substr($tempcontent2,0,$offset)." ... "];
-                $wordsaccounted++;
-
-                while (($tpos=mb_stripos_any($subqueries, $tempcontent2,$offset))[0]){
+                $subcounter=0;
+                while (($tpos=mb_stripos_any($subqueries, $tempcontent2,$offset))[0] && $subcounter++<6){
                     $subsnippetlength=(($snippetlength-$originaloffset-mb_strlen(array_reduce(array_slice($submatches,0,$wordsaccounted), fn ($x,$y)=>$x.$y[1],"") ) )/$wordsaccounted/2 );
                     $startat=max($offset,$tpos[0]-$subsnippetlength);
                     $combinedlength=$subsnippetlength*2+mb_strlen($tpos[1]);
                     $tbcarr[]=mb_substr($tempcontent2, $startat,$combinedlength )." ... ";
                     $offset=$startat+$combinedlength+5;
                 }
+
                 
             }
             $tempcontent=array_reduce($tbcarr, fn ($x,$y)=>$x.$y,"");
