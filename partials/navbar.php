@@ -19,14 +19,22 @@
             <li><a class="dropdown-item font-sans" href="/funcionamiento">Funcionamiento del centro</a></li>
             <li><a class="dropdown-item font-sans" href="/estatuto">Estatuto</a></li>
             <li><a class="dropdown-item font-sans" href="/sitio">Informacion del Sitio</a></li>
-            <li><a class="dropdown-item font-sans" href="/noticias">Noticias</a></li>
-            <li><a class="dropdown-item font-sans" href="/todo">Todo</a></li>
             <li><a class="dropdown-item font-sans" href="/contacto">Contacto</a></li>
             <li><a class="dropdown-item font-sans" href="/miembros">Miembros</a></li>
-            <li><a class="dropdown-item font-sans" href="/reuniones">Reuniones de Delegados</a></li>
-            <li><a class="dropdown-item font-sans" href="/elecciones">Elecciones</a></li>
             <li><a class="dropdown-item font-sans" href="/transparencia">Transparencia</a></li>
             <li><a class="dropdown-item font-sans" href="/docs">Informacion Tecnica</a></li>
+
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Novedades
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item font-sans" href="/noticias">Noticias</a></li>
+            <li><a class="dropdown-item font-sans" href="/todo">Todo</a></li>
+            <li><a class="dropdown-item font-sans" href="/reuniones">Reuniones de Delegados</a></li>
+            <li><a class="dropdown-item font-sans" href="/elecciones">Elecciones</a></li>
 
           </ul>
         </li>

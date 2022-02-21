@@ -91,3 +91,26 @@ h1, h2, h3, h4, h5, h6{
     -moz-transform: scale(0.1, 0.1);
 }
 */
+
+.subicons{
+  display:inline-flex;
+  float:left;
+  transform: translateX(-25%);
+  gap:1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  pointer-events: none;
+}
+.subiconslong{
+  transform: translateX(-40%);
+
+}
+
+
+.a-footer:hover .subicons {
+  opacity: 1;
+  transition: opacity 0s ease-out;
+  pointer-events:visible;
+}
+
+

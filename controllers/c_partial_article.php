@@ -183,7 +183,7 @@ if ($showcategories){
 //}
 
 if ($shadowcontain){
-    $displaysnippet = function() use ($content, $link, $loggedin, $allcategoriesassoc){
+    $displaysnippet = function() use ($content, $link, $loggedin, $allcategoriesassoc, $replacehtml, $replacecss){
         $displayas="fullpage";
         include 'controllers/c_partial_article.php';
     };

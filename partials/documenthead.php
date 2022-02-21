@@ -1,3 +1,4 @@
+<?php include 'assets/ver.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,8 +25,8 @@
     
     */ ?>
 
-    <link href="/css/main.css" rel="stylesheet">
-    <link href="/css/footer.css" rel="stylesheet">
+    <link href="/css/main.css?version=<?= $ver ?>" rel="stylesheet">
+    <link href="/css/footer.css?version=<?= $ver ?>" rel="stylesheet">
     <script id="vars">
         <?php
         if (isset ($jsvars)){
