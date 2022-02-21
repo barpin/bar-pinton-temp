@@ -11,7 +11,8 @@ if(!$link){
 }
 
 
-function qq ($link, $query, $exitCode=false){
+function qq ($query, $exitCode=false){
+    GLOBAL $link;
     if(!($tres = mysqli_query($link, $query))){
         if ($exitCode){
             header("HTTP/1.1 ${exitCode}");
@@ -23,8 +24,8 @@ function qq ($link, $query, $exitCode=false){
     return $tres;
 }
 
-function entries ($link, $query, $fetchrow = false, $assoc=false, $exitCode=false){
-    $entries=qq($link, $query, $exitCode);
+function entries ($query, $fetchrow = false, $assoc=false, $exitCode=false){
+    $entries=qq($query, $exitCode);
     $entryarr=[];
     while($row= $fetchrow ? $entries->fetch_row() : $entries->fetch_assoc()){
         if ($assoc){
@@ -36,14 +37,15 @@ function entries ($link, $query, $fetchrow = false, $assoc=false, $exitCode=fals
     return $entryarr;
 }
 
-function sanitize ($link, $text){
+function sanitize ( $text){
+    GLOBAL $link;
     return str_replace("\r\n", "\n", mysqli_real_escape_string($link, htmlspecialchars($text)));
 }
 
-function getcols($link){
+function getcols(){
     $colstr="";
     $query="select concat('posts.', column_name, ' as p_', column_name, ', ') AS cols from Information_Schema.columns c where table_name = 'posts' UNION ALL select concat('textupdates.', column_name, ' as t_', column_name, ', ') AS cols from Information_Schema.columns c where table_name = 'textupdates'";
-    foreach (entries($link, $query, true) as $scstr ){
+    foreach (entries( $query, true) as $scstr ){
         $colstr.=$scstr[0];
     }
     
@@ -56,7 +58,7 @@ function getpost($varname){
 
 $posts_data_inners= " FROM posts INNER JOIN textupdates ON posts.id = textupdates.post_id INNER JOIN users ON users.id = textupdates.author_id ";
 
-$posts_data_query="SELECT ".getcols($link).$posts_data_inners;
+$posts_data_query="SELECT ".getcols().$posts_data_inners;
 
-$allcategoriesassoc=entries($link, "SELECT * FROM categories", false, "id");
+$allcategoriesassoc=entries( "SELECT * FROM categories", false, "id");
 

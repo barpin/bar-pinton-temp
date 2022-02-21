@@ -62,8 +62,8 @@ function mb_stripos_any($needles, $haystack, $offset=0){
 require_once 'assets/session_start.php';
 require_once 'assets/database.php';
 
-$categoryquery=sanitize($link, getpost('c'));
-$searchquery=sanitize($link, getpost('q'));
+$categoryquery=sanitize(getpost('c'));
+$searchquery=sanitize(getpost('q'));
 $showreplaced=false;
 ob_start();
 include('api/feed.php');
@@ -78,7 +78,7 @@ foreach ($posts as $ipost){
   $querylist[]=$templatequery." ${ipost} ".($showreplaced ? "" : " AND replaced_at IS NULL ");
 }
 $resultsquery=implode(" UNION ALL ", $querylist);
-$results=entries($link, $resultsquery);
+$results=entries( $resultsquery);
 $displayas="searchresult";
 
 require_once 'partials/documenthead.php';

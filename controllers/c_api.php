@@ -3,12 +3,12 @@ if (!debug){header("Content-type: application/json; charset=utf-8");}
 
 require_once 'assets/database.php';
 
-function authenticate($link, $perms=false){ //TODO real authentication (Oauth?)
+function authenticate($perms=false){ //TODO real authentication (Oauth?)
     require_once 'assets/session_start.php'; 
     
     if (isset($_SESSION['id'])){
         if ($perms){
-            return [$_SESSION['id'], gmp_init(qq($link, "SELECT perms FROM users WHERE id = ${_SESSION['id']}")->fetch_assoc()["perms"])];
+            return [$_SESSION['id'], gmp_init(qq("SELECT perms FROM users WHERE id = ${_SESSION['id']}")->fetch_assoc()["perms"])];
         } else {
             return $_SESSION['id'];
         }
@@ -20,7 +20,7 @@ function authenticate($link, $perms=false){ //TODO real authentication (Oauth?)
 
 function queryAndPush($link, $query){
     $json=[];
-    $result=qq($link, $query);
+    $result=qq($query);
     while ($row=mysqli_fetch_assoc($result)){
         $json[]=$row;
     }
@@ -37,13 +37,13 @@ function assertExitCode($assertion, $code){
     }
 }
 
-function recursiveSanitize($link, $arr){
+function recursivesanitize($arr){
     $returnarr=[];
     foreach ($arr as $varname=>$varval){
         if (is_array($varval)){
-            $returnarr[sanitize($link, $varname)]=recursiveSanitize($link, $varval);
+            $returnarr[sanitize($varname)]=recursivesanitize($varval);
         } else {
-            $returnarr[sanitize($link, $varname)]=sanitize($link, $varval);
+            $returnarr[sanitize($varname)]=sanitize($varval);
         }
     }
     return $returnarr;
@@ -64,20 +64,20 @@ foreach($_GET as $varname=>$varval){
 
 foreach($_POST as $varname=>$varval){
     if (($decodedvar=json_decode($varval))!==null && is_array($decodedvar)){
-        $_POST[$varname] = recursiveSanitize($link, $decodedvar);
+        $_POST[$varname] = recursivesanitize($decodedvar);
         
     } else {
-        $_POST[$varname] = sanitize($link, $varval);
+        $_POST[$varname] = sanitize($varval);
         //echo $varname." ".$varval." ".json_decode($varval)."\n";
     }
 }
 
 foreach($_GET as $varname=>$varval){
     if (($decodedvar=json_decode($varval))!==null && is_array($decodedvar)){
-        $_GET[$varname] = recursiveSanitize($link, $decodedvar);
+        $_GET[$varname] = recursivesanitize($decodedvar);
         
     } else {
-        $_GET[$varname] = sanitize($link, $varval);
+        $_GET[$varname] = sanitize($varval);
         //echo $varname." ".$varval." ".json_decode($varval)."\n";
     }
 }

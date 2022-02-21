@@ -3,8 +3,8 @@
 //ejemplo ..../api/v1/feed?Voto.noche   devuelve la lista de todos los votos de la secretaria de turno noche
 //ejemplo ..../api/v1/feed?category=2,!(3.Comision.genero).!7  devuelve la lista de todos los posts de categoria 1 (2^1=2), y los que o no son de ni la categoria 3, ni de alguna comisio, ni de de la secretaria de genero  o no son de las categorias 0, 1, o 2 (2^7= 2^0 | 2^1 | 2^2)
 
-define("urlcategoryarr", entries($link, "SELECT * FROM categories", false, "urlname", "500 Internal Server Error"));
-define("namecategoryarr", entries($link, "SELECT * FROM categories", false, "name", "500 Internal Server Error"));
+define("urlcategoryarr", entries( "SELECT * FROM categories", false, "urlname", "500 Internal Server Error"));
+define("namecategoryarr", entries( "SELECT * FROM categories", false, "name", "500 Internal Server Error"));
 
 
   
@@ -64,7 +64,7 @@ function parseurl($url){
 
 
 
-function queryToRank($link, $input){
+function queryToRank($input){
   $queriedfields=['textupdates.content', 'posts.title']; 
   $input=htmlspecialchars_decode($input);
   $sumterms=[]; 
@@ -72,7 +72,7 @@ function queryToRank($link, $input){
   $sepqs=array_filter(explode('"', $input), fn ($x)=>$x);
   foreach($sepqs as $x=>$spval){
     if ($x % 2){
-      $sumterms[] = sumTerm($link, $spval);
+      $sumterms[] = sumTerm($spval);
       $tmpwts=[];
       foreach ($queriedfields as $tmpqf){
         $tmpwts[]=" LOWER(${tmpqf}) LIKE LOWER(\"%${spval}%\") ";
@@ -103,7 +103,8 @@ function queryToRank($link, $input){
 }
 
 
-function sumTerm($link, $subqueryval, $regexp=false, $relevance=1){
+function sumTerm($subqueryval, $regexp=false, $relevance=1){
+  GLOBAL $link;
   //$queriedfields=['textupdates.content', 'posts.title', 'users.nickname', 'users.name'];
   $queriedfields=['textupdates.content', 'posts.title']; //searching usernames breaks everything for some reason. TODO?
   
@@ -144,14 +145,14 @@ function getLevenshtein($inputword, $depth=1){
 $categoryquery = $categoryquery ?? getpost("category");
 $whereclause= $categoryquery ? parseurl($categoryquery) : "1";
 $searchquery = $searchquery ?? getpost("q");
-$rankquery=queryToRank($link, $searchquery);
+$rankquery=queryToRank($searchquery);
 $sumquery=$rankquery[0];
 $whereclause.=$rankquery[1];
 
 //no more inline ifs this is hard enough to read on its own.
 $query="SET @temptext :='';";
-qq($link, $query, "500 Internal Server Error");
-$query="SELECT ". ( debug ? getcols($link) : " posts.id  ");
+qq($query, "500 Internal Server Error");
+$query="SELECT ". ( debug ? getcols() : " posts.id  ");
 if ($searchquery){
   $query .= " , ".$sumquery ;
 }
@@ -170,9 +171,9 @@ function idecho($y){
 }
 
 if ($searchquery){
-  $result=array_filter(entries($link, $query, false, false, "500 Internal Server Error"), fn ($x)=>floatval($x['relevance']));
+  $result=array_filter(entries( $query, false, false, "500 Internal Server Error"), fn ($x)=>floatval($x['relevance']));
 } else {
-  $result=entries($link, $query, false, false, "500 Internal Server Error");
+  $result=entries( $query, false, false, "500 Internal Server Error");
 }
 
 echo json_encode(array_map( function($x){return $x['p_id'];} , $result )); 

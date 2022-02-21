@@ -12,7 +12,7 @@ if (isset($version)){
 
 }
 
-$result=qq($link, $query);
+$result=qq($query);
 if ( !$result->num_rows == 1){
     $_SESSION["msg"]="Este post no se encontro (o se encontro mas de 1). Asegurese de que tenga un texto relacionado"; // El usuario y/o contraseña esta mal
     $_SESSION["icon"]="error";

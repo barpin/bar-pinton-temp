@@ -16,14 +16,14 @@ if ((gmp_init($_SESSION['perms']) & 1024) == 0 ){
     header('Location: /');
 }
 //$query="SHOW COLUMNS FROM users WHERE Field != nicknames && Field != nicknames";
-//$tablehead=entries($link, $query);
+//$tablehead=entries( $query);
 $tablehead=["id","name","perms","updated_at","code"];
 $query="SELECT id,name,perms,updated_at,code FROM users WHERE users.password IS NULL";
-$codeslist=entries($link, $query);
+$codeslist=entries( $query);
 
 //$jsvars=['userperms'=>$_SESSION['perms']];
 
-$permsdata=entries($link, "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
+$permsdata=entries( "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
 
 require_once 'partials/documenthead.php';
 include_once 'partials/navbar.php';

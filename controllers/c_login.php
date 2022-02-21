@@ -27,11 +27,11 @@ if (isset($_SESSION["id"])){
 if (isset($_POST['login'])){
 	if(!empty($_POST['email']) && !empty($_POST['pass'])){
         $parr = [
-            "email"=>sanitize($link, $_POST['email']),
-            "pass"=>sanitize($link, $_POST['pass']),
+            "email"=>sanitize($_POST['email']),
+            "pass"=>sanitize($_POST['pass']),
         ];
 		$sqlquery= "select * from users where users.email = '${parr['email']}' ";
-		$result=qq($link, $sqlquery);
+		$result=qq($sqlquery);
 		
 		if (mysqli_num_rows($result) == 0) { 
 			$_SESSION["msg"]="El nombre de usuario o contraseña es incorrecto";

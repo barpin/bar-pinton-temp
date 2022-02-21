@@ -7,7 +7,7 @@
 //TODO: make it return a json of the new code as so to not have to refresh the codes page.
 
 
-$userdata= authenticate($link, true);
+$userdata= authenticate(true);
 $userid=$userdata[0];
 $userperms=$userdata[1];
 
@@ -17,7 +17,7 @@ assertExitCode( ($userperms & 1024 ) == 0 , "403 Forbidden");
 if (isset($_POST['id'])){
   if (isset($_POST['delete'])){
     $query= "DELETE FROM users WHERE id = ${_POST['id']} AND password IS NULL";
-    $result=qq($link, $query, "500 Internal Server Error");
+    $result=qq($query, "500 Internal Server Error");
     assertExitCode( $result , "400 Bad Request");
 
     echo $_POST['id'];
@@ -31,12 +31,12 @@ if (isset($_POST['id'])){
     assertExitCode( !(($userperms & $changedperms) == $changedperms), "403 Forbidden");
 
     $query= "UPDATE users SET name = '${_POST['name']}' , perms = ${_POST['perms']} WHERE id = ${_POST['id']} AND password IS NULL";
-    qq($link, $query, "500 Internal Server Error");
+    qq($query, "500 Internal Server Error");
     echo $_POST['id'];
   }
 
 } else {
-  $globalPerms=entries($link, "SELECT * FROM categories", false, "id", "500 Internal Server Error");
+  $globalPerms=entries( "SELECT * FROM categories", false, "id", "500 Internal Server Error");
     
   $submittedPerms=gmp_init(0); //this one verifies if the user has all the required categories
 
@@ -48,12 +48,12 @@ if (isset($_POST['id'])){
   assertExitCode(!(isset($_POST['name']) && $_POST['name']!=""), "400 Bad Request");
 
   $code= substr(md5(rand()),0,8);
-  while (qq($link, "SELECT code FROM users WHERE code = '${code}'", "500 Internal Server Error")->num_rows !=0){
+  while (qq("SELECT code FROM users WHERE code = '${code}'", "500 Internal Server Error")->num_rows !=0){
     $code=substr(md5(rand()),0,8);
   }
 
   $query="INSERT INTO users VALUES(null, '${_POST['name']}', null, ${submittedPerms}, null, null, null, null, NOW(), '${code}')";
-  $result=qq($link, $query, "500 Internal Server Error");
+  $result=qq($query, "500 Internal Server Error");
   echo true;
 
 }

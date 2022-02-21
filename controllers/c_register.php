@@ -29,20 +29,20 @@ if(isset($_POST['register'])){
 	if(!empty($_POST['pass']) && !empty($_POST['cpass']) && !empty($_POST['email']) && !empty($_POST['code'])){
 		if ($_POST['pass']==$_POST['cpass']){
             $parr = [
-                "email"=>sanitize($link, $_POST['email']),
-                "nick"=>sanitize($link, $_POST['nick']),
-                "code"=>sanitize($link, $_POST['code']),
-                "pass"=>sanitize($link, $_POST['pass']),
+                "email"=>sanitize($_POST['email']),
+                "nick"=>sanitize($_POST['nick']),
+                "code"=>sanitize($_POST['code']),
+                "pass"=>sanitize($_POST['pass']),
             ];
             $nick= empty($parr['nick']) ? "null" : "'${parr['nick']}'";
 			$sqlquery= "select * from users where users.email is null and users.code = '${parr['code']}'" ;
-			$result = qq($link, $sqlquery);
+			$result = qq($sqlquery);
 			
 			if (mysqli_num_rows($result) == 1) { //md5(''), now()
 
 				$sqlquery="UPDATE users SET nickname = ${nick}, email = '${parr['email']}', password=md5('${parr['pass']}'), created_at = now(), deleted_at=null, updated_at=now() WHERE users.code = '${parr['code']}'";
 
-				qq($link, $sqlquery);
+				qq($sqlquery);
 				//echo("account created");
 				session_unset();
 				session_destroy();

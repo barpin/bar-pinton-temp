@@ -16,13 +16,13 @@ if ((gmp_init($_SESSION['perms']) & 2048) == 0 ){
     header('Location: /');
 }
 $query="SHOW COLUMNS FROM users WHERE Field != 'password'";
-$tablehead=array_map(function($x){return $x['Field'];}, entries($link, $query));
+$tablehead=array_map(function($x){return $x['Field'];}, entries( $query));
 $query="SELECT ".join(", ",$tablehead)." FROM users WHERE created_at IS NOT NULL";
-$userlist=entries($link, $query);
+$userlist=entries( $query);
 
 //$jsvars=['userperms'=>$_SESSION['perms']];
 
-$permsdata=entries($link, "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
+$permsdata=entries( "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
 $isroot=$_SESSION['id']==="0";
 
 require_once 'partials/documenthead.php';

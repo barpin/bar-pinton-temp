@@ -16,15 +16,15 @@ if ((gmp_init($_SESSION['perms']) & 4096) == 0 ){
     header('Location: /');
 }
 $query="SHOW COLUMNS FROM categories";
-$tablehead=array_map(function($x){return $x['Field'];}, entries($link, $query));
+$tablehead=array_map(function($x){return $x['Field'];}, entries( $query));
 $query="SELECT ".join(", ",$tablehead)." FROM categories";
-$categorylist=entries($link, $query);
+$categorylist=entries( $query);
 
 //$jsvars=['userperms'=>$_SESSION['perms']];
 
-$permsdata=entries($link, "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
+$permsdata=entries( "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
 $isroot=$_SESSION['id']==="0";
-$jsvars=['perms'=>$_SESSION['perms'], 'permsdata'=>entries($link, "SELECT * FROM categories", false, 'id')];
+$jsvars=['perms'=>$_SESSION['perms'], 'permsdata'=>entries( "SELECT * FROM categories", false, 'id')];
 
 
 

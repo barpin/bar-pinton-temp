@@ -68,9 +68,9 @@ if (!$loggedin){
 }
 
 if (isset($article)){
-    $cols=getcols($link);
+    $cols=getcols();
     $query= $posts_data_query."WHERE textupdates.replaced_at IS NULL AND posts.id = ${article} ";
-    $articledata=qq($link, $query)->fetch_assoc();
+    $articledata=qq($query)->fetch_assoc();
 
     if ((gmp_init($_SESSION['perms']) & gmp_init($articledata['p_category'])) == 0 ){
         $_SESSION["msg"]="No Tenes Permiso para editar este articulo";
@@ -97,7 +97,7 @@ if (isset($article)){
     
     SELECT * FROM UsedCategories;
     EOF; //all this just to avoid doing it in js which ill have to do later anyway.
-    $permsdata=entries($link,$query);
+    $permsdata=entries($query);
 } else {
     if (gmp_init($_SESSION['perms'])  == 0 ){
         $_SESSION["msg"]="No Tenes Permiso para crear un articulo";
@@ -107,13 +107,13 @@ if (isset($article)){
 
     $jsvars = ['isnew'=>1,];
     $new=1;
-    $permsdata=entries($link, "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
+    $permsdata=entries( "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
 
 }
 //echo "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) OR id = 0";
 
 //TODO might remove this later, i think this is all done with php directly 
-$jsvars=array_merge($jsvars, ['perms'=>$_SESSION['perms'], 'permsdata'=>entries($link, "SELECT * FROM categories", false, 'id')]);
+$jsvars=array_merge($jsvars, ['perms'=>$_SESSION['perms'], 'permsdata'=>entries( "SELECT * FROM categories", false, 'id')]);
 $staticdisabled = gmp_intval((gmp_init($_SESSION['perms']) & 9) == 0);
 
 

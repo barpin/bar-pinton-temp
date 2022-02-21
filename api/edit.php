@@ -6,7 +6,7 @@
 
 
 
-$userdata= authenticate($link, true);
+$userdata= authenticate(true);
 $userid=$userdata[0];
 $userperms=$userdata[1]; //in case it was changed since last login
 
@@ -15,13 +15,13 @@ assertExitCode(!(isset($_POST['content'])), "400 Bad Request");
 if (isset($_POST['css'])){
 
     if ($_POST['css']==file_get_contents("css/default_article.css") || empty(array_diff( str_split($_POST['css']), str_split("/*CSS:DEFAULT*/")))){
-        $css = "'".sanitize($link, "/*CSS:DEFAULT*/")."'";
+        $css = "'".sanitize("/*CSS:DEFAULT*/")."'";
     } else {
 
         $css = "'".$_POST['css']."'";
         $query="SELECT id FROM textupdates WHERE css = '${_POST['css']}'";
-        if ($equalcss=qq($link, $query)->fetch_assoc()){
-            $css = "'".sanitize($link, "/*CSS:${equalcss['id']}*/")."'";
+        if ($equalcss=qq($query)->fetch_assoc()){
+            $css = "'".sanitize("/*CSS:${equalcss['id']}*/")."'";
         }
     }
 } else {
@@ -29,13 +29,13 @@ if (isset($_POST['css'])){
 }
 
 $query="SELECT id FROM textupdates WHERE content = '${_POST['content']}'";
-if ($equalhtml=qq($link, $query)->fetch_assoc()){
-    $_POST['content'] = sanitize($link, "<!--HTML:${equalhtml['id']}-->");
+if ($equalhtml=qq($query)->fetch_assoc()){
+    $_POST['content'] = sanitize("<!--HTML:${equalhtml['id']}-->");
 }
 
 
 if (isset($_POST['id'])){ //if editing (not creating new)
-    $postdataobj=qq($link, $posts_data_query."WHERE posts.id = ${_POST['id']}", "500 Internal Server Error");
+    $postdataobj=qq($posts_data_query."WHERE posts.id = ${_POST['id']}", "500 Internal Server Error");
 
     assertExitCode($postdataobj->num_rows==0, "404 Not Found");
     $postdata=$postdataobj->fetch_assoc();
@@ -43,13 +43,13 @@ if (isset($_POST['id'])){ //if editing (not creating new)
 
     
     $query="UPDATE textupdates SET replaced_at = NOW() WHERE post_id = ${_POST['id']} AND replaced_at IS NULL";
-    qq($link, $query, "500 Internal Server Error");
+    qq($query, "500 Internal Server Error");
     
     $query="INSERT INTO textupdates VALUES(null, ${_POST['id']}, '${_POST['content']}', ${css},  ${_SESSION['id']}, NOW(), null)";
-    qq($link, $query);
+    qq($query);
     echo $_POST['id'];
 } else {
-    $globalCategories=entries($link, "SELECT * FROM categories", false, "id", "500 Internal Server Error");
+    $globalCategories=entries( "SELECT * FROM categories", false, "id", "500 Internal Server Error");
     
     $addedpostcategories=gmp_init(0); //this one verifies if the user has all the required categories
     $parentcategories=gmp_init(0); //the parent categories of each of the categories
@@ -77,20 +77,20 @@ if (isset($_POST['id'])){ //if editing (not creating new)
     $postoptions = isset ($_POST['options']) ? "'".json_encode($_POST['options'])."'" : "null" ;
 
     if ($css== "null" && $_POST['type']=='static'){
-        $css = sanitize($link, "'/*CSS:DEFAULT*/'");
+        $css = sanitize("'/*CSS:DEFAULT*/'");
     }
 
     $query= "INSERT INTO posts VALUES(null, '${_POST['title']}', NOW(), null, ${finalcategories}, ${end_date}, ${postoptions} ); ";
-    qq($link, $query, "500 Internal Server Error");
+    qq($query, "500 Internal Server Error");
     
-    $newpostID=qq($link, "SELECT MAX(id)  FROM  posts", "500 Internal Server Error")->fetch_row()[0];
+    $newpostID=qq("SELECT MAX(id)  FROM  posts", "500 Internal Server Error")->fetch_row()[0];
 
     $query="INSERT INTO textupdates VALUES(null, ${newpostID}, '${_POST['content']}', ${css}, ${_SESSION['id']}, NOW(), null)";
-    qq($link, $query, "500 Internal Server Error");
+    qq($query, "500 Internal Server Error");
 
     if (isset ($_POST['options'])){
         for ($x=0;$x<count($_POST['options']);$x++){
-            qq($link, "INSERT INTO votesresults VALUES (null, ${newpostID}, ${x})", "500 Internal Server Error");
+            qq("INSERT INTO votesresults VALUES (null, ${newpostID}, ${x})", "500 Internal Server Error");
         }
     }
 

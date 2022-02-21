@@ -13,7 +13,7 @@ require_once 'assets/database.php';
 
 $query=$posts_data_query."WHERE posts.id = ${article} ORDER BY t_replaced_at IS NULL DESC, t_replaced_at DESC";
 
-$posts=entries($link, $query);
+$posts=entries( $query);
 if ( count($posts) < 1){
     $_SESSION["msg"]="Este post no se encontro ";
     $_SESSION["icon"]="error";

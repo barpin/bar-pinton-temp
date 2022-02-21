@@ -138,7 +138,7 @@ if ($category==16){
         $votephase=2;
     } else {
         $query="SELECT * FROM votescast WHERE post_id = ${content['p_id']} AND user_id = ${_SESSION['id']}";
-        if (qq($link, $query)->num_rows){
+        if (qq($query)->num_rows){
             $votephase=2;
         } else {
             $votephase=1;
@@ -147,7 +147,7 @@ if ($category==16){
 
     if ($votephase==2){ 
         $query="SELECT vote,COUNT(1) as OccurenceValue FROM votesresults WHERE post_id=${content['p_id']} GROUP BY vote ;";
-        $votesresults=entries($link, $query);
+        $votesresults=entries( $query);
     }
 } else {
     $votephase=0;
@@ -183,7 +183,7 @@ if ($showcategories){
 //}
 
 if ($shadowcontain){
-    $displaysnippet = function() use ($content, $link, $loggedin, $allcategoriesassoc, $replacehtml, $replacecss){
+    $displaysnippet = function() use ($content, $loggedin, $allcategoriesassoc, $replacehtml, $replacecss){
         $displayas="fullpage";
         include 'controllers/c_partial_article.php';
     };
