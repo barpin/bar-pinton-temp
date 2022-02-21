@@ -78,6 +78,11 @@ if (isset($article)){
         header('Location: /');
     }
 
+    $category=0b111111111;
+    include_once 'assets/replacehtml_css.php';
+    while ($articledata['t_content']!=($articledata['t_content']=htmlspecialchars_decode(preg_replace_callback("/<!--HTML:(.*)-->/mi", $replacehtml, $articledata['t_content']))));
+    while ($articledata['t_css']!=($articledata['t_css']=htmlspecialchars_decode(preg_replace_callback("/\/\*CSS:(.*)\*\//mi", $replacecss, $articledata['t_css']))));
+
     $jsvars = array_merge($articledata, ['isnew'=>0]); 
     $jsvars['t_css']=htmlspecialchars_decode($jsvars['t_css']);
     $jsvars['t_content']=htmlspecialchars_decode($jsvars['t_content']);

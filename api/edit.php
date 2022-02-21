@@ -10,21 +10,43 @@ $userdata= authenticate($link, true);
 $userid=$userdata[0];
 $userperms=$userdata[1]; //in case it was changed since last login
 
+assertExitCode(!(isset($_POST['content'])), "400 Bad Request");
+
+if (isset($_POST['css'])){
+
+    if ($_POST['css']==file_get_contents("css/default_article.css") || empty(array_diff( str_split($_POST['css']), str_split("/*CSS:DEFAULT*/")))){
+        $css = "'".sanitize($link, "/*CSS:DEFAULT*/")."'";
+    } else {
+
+        $css = "'".$_POST['css']."'";
+        $query="SELECT id FROM textupdates WHERE css = '${_POST['css']}'";
+        if ($equalcss=qq($link, $query)->fetch_assoc()){
+            $css = "'".sanitize($link, "/*CSS:${equalcss['id']}*/")."'";
+        }
+    }
+} else {
+    $css= "'null'";
+}
+
+$query="SELECT id FROM textupdates WHERE content = '${_POST['content']}'";
+if ($equalhtml=qq($link, $query)->fetch_assoc()){
+    $_POST['content'] = sanitize($link, "<!--HTML:${equalhtml['id']}-->");
+}
+
+
 if (isset($_POST['id'])){ //if editing (not creating new)
     $postdataobj=qq($link, $posts_data_query."WHERE posts.id = ${_POST['id']}", "500 Internal Server Error");
 
     assertExitCode($postdataobj->num_rows==0, "404 Not Found");
     $postdata=$postdataobj->fetch_assoc();
     assertExitCode(($userperms & gmp_init($postdata['p_category'])) == 0, "403 Forbidden");
-    assertExitCode(!(isset($_POST['content'])), "400 Bad Request");
 
-    $css = isset($_POST['css']) ? "'".$_POST['css']."'" : "null";
     
     $query="UPDATE textupdates SET replaced_at = NOW() WHERE post_id = ${_POST['id']} AND replaced_at IS NULL";
     qq($link, $query, "500 Internal Server Error");
     
     $query="INSERT INTO textupdates VALUES(null, ${_POST['id']}, '${_POST['content']}', ${css},  ${_SESSION['id']}, NOW(), null)";
-    qq($link, $query, "500 Internal Server Error");
+    qq($link, $query);
     echo $_POST['id'];
 } else {
     $globalCategories=entries($link, "SELECT * FROM categories", false, "id", "500 Internal Server Error");
@@ -40,7 +62,7 @@ if (isset($_POST['id'])){ //if editing (not creating new)
 
     assertExitCode(!($addedpostcategories == ($userperms & $addedpostcategories)), "403 Forbidden");
     assertExitCode($addedpostcategories == 0, "403 Forbidden");
-    assertExitCode(!(isset($_POST['content']) && isset($_POST['type']) && isset($_POST['title'])), "400 Bad Request");
+    assertExitCode(!(isset($_POST['type']) && isset($_POST['title'])), "400 Bad Request");
     assertExitCode($_POST['type']=='vote' && !( isset($_POST['end_date']) && $_POST['options'] != "[]"  ), "400 Bad Request");
     
     $postTypes=[
@@ -51,8 +73,12 @@ if (isset($_POST['id'])){ //if editing (not creating new)
     ];
     $finalcategories=$addedpostcategories | $parentcategories | gmp_init($postTypes[$_POST['type']]);
     $end_date = isset($_POST['end_date']) ? "'".$_POST['end_date']."'" : "null";
-    $css = isset($_POST['css']) ? "'".$_POST['css']."'" : "null";    
+
     $postoptions = isset ($_POST['options']) ? "'".json_encode($_POST['options'])."'" : "null" ;
+
+    if ($css== "null" && $_POST['type']=='static'){
+        $css = sanitize($link, "'/*CSS:DEFAULT*/'");
+    }
 
     $query= "INSERT INTO posts VALUES(null, '${_POST['title']}', NOW(), null, ${finalcategories}, ${end_date}, ${postoptions} ); ";
     qq($link, $query, "500 Internal Server Error");

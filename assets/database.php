@@ -36,7 +36,7 @@ function entries ($link, $query, $fetchrow = false, $assoc=false, $exitCode=fals
 }
 
 function sanitize ($link, $text){
-    return mysqli_real_escape_string($link, htmlspecialchars($text));
+    return str_replace("\r\n", "\n", mysqli_real_escape_string($link, htmlspecialchars($text)));
 }
 
 function getcols($link){

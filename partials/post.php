@@ -20,6 +20,7 @@
                 
                 <?php if ($content['p_deleted_at']) { ?> <span>Borrado: <?= $content['p_deleted_at'] ?></span> <?php } ?>
                 <?php if ($content['p_end_date']) { ?> <span>Termina/o el: <?= $content['p_end_date'] ?></span> <?php } ?>
+                <?php if ($showversion) { ?> <span>Version: <?= $content['t_id'] ?></span> <?php } ?>
                 <?php if ($showauthor) { ?> <span>Editado por: <?= $content['u_name'] ?></span> <?php } ?>
                 <?php if ($content['t_replaced_at']) { ?> 
                     <span>Reemplazado: <?= $content['t_replaced_at'] ?></span> 

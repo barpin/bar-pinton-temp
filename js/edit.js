@@ -220,9 +220,10 @@ function postform (formData){
           }).then((jsonResponse) => {
               console.log(jsonResponse);
               if (isnew) {
-                  window.location.href=window.location.origin+`/editar/${newpostnumber}`
+                  window.location.href=window.location.origin+`/articulo/${newpostnumber}`
               } else {
-                window.location.reload(true);
+                window.location.href=window.location.origin+`/articulo/${p_id}`
+
               }  
           });
     }).catch((error) => {
@@ -280,7 +281,7 @@ if (!isnew){
         i_enddate.value=p_end_date;
         JSON.parse(p_options).forEach(x=>addvoteoption(x, "disabled"));
     }
-    if (t_css && t_css!="/*SET:DEFAULT*/"){
+    if (t_css && t_css!="/*CSS:DEFAULT*/"){
         sethtmleditor();
     }
 }

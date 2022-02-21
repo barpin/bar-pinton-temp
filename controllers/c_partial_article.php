@@ -20,10 +20,29 @@ $vsnippet=false;
 $hsnippet=false;
 $shadowcontain=false;
 $shortenstrip=false;
+$showversion=0;
 
 
 $content['t_content']=isset($content['t_content']) ? htmlspecialchars_decode($content['t_content']):null;
 $content['t_css']=isset($content['t_css']) ? htmlspecialchars_decode($content['t_css']): null;
+
+include_once 'assets/replacehtml_css.php';
+
+while ($content['t_content']!=($tempcontent=htmlspecialchars_decode(preg_replace_callback("/<!--HTML:(.*)-->/mi", $replacehtml, $content['t_content'])))){
+    $content['t_content']=$tempcontent;
+}
+
+
+
+
+while ($content['t_css']!=($tempcss=htmlspecialchars_decode(preg_replace_callback("/\/\*CSS:(.*)\*\//mi", $replacecss, $content['t_css'])))){
+    $content['t_css']=$tempcss;
+}
+
+if (empty(array_diff( str_split($content['t_css']), str_split("/*CSS:DEFAULT*/")))){
+    $content['t_css']=file_get_contents('css/default_article.css');
+}
+
 
 if ($displayas=="fullpage"){
     $viewdetails=0;
@@ -65,7 +84,7 @@ if ($displayas=="fullpage"){
     $restore=$canedit;
     $canedit=0;
     $viewhist=0;
-    
+    $showversion=1;
     switch ($category){
         case 4: //post
             break;

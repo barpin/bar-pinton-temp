@@ -72,11 +72,12 @@ ob_end_clean();
 
 $posts=json_decode($apijson);
 
-$resultsquery=$posts_data_query."WHERE ( ";
+$templatequery=$posts_data_query."WHERE posts.id =  ";
+$querylist=[];
 foreach ($posts as $ipost){
-  $resultsquery.=" posts.id = ${ipost} OR ";
+  $querylist[]=$templatequery." ${ipost} ".($showreplaced ? "" : " AND replaced_at IS NULL ");
 }
-$resultsquery.="0 ) ".($showreplaced ? "" : " AND replaced_at IS NULL");
+$resultsquery=implode(" UNION ALL ", $querylist);
 $results=entries($link, $resultsquery);
 $displayas="searchresult";
 

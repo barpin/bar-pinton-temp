@@ -24,7 +24,8 @@ $content = $result->fetch_assoc();
 $title = $content['p_title'];    
 
 
-$headertags="<script src='/js/dropdownfuncs.js?version=${ver}' defer></script>";
+
+$headertags="<script src='/js/dropdownfuncs.js?version=${ver}' defer></script>"."<style>${content['t_css']}</style>";
 $displayas="fullpage";
 require_once 'assets/session_start.php';
 

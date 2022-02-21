@@ -44,6 +44,9 @@ $queryend=" AND posts.deleted_at IS ".($archive ? "NOT" : "")." NULL ORDER BY po
 $result=qq($link, $query."= ${staticcategory}".$queryend);
 $content = (isset($nomain) && $nomain) ? false : $result->fetch_assoc();    
 
+if ($content){
+    $headertags.="<style id='categorystyle'>".$content['t_css']."</style>";
+}
 
 
 $alerts = entries($link, $query."& ${alertcategory} = ${alertcategory}".$queryend);
