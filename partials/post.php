@@ -2,10 +2,12 @@
                     <?= $hsnippet ? "gap-3" : "" ?>" 
             id="art-<?= $content['p_id'] ?>-<?= $content['t_id'] ?>" 
              style="<?= $margins ? "width:max(70vw, min(90%,350px)); margin: 10px auto;" : "" ?>
+                    <?= $displayas=="snippet" ? "background-color: rgb(220,220,245);padding:0.5rem;border-radius:2px;height:100%;" : "" ?>
                     <?= $redback ? "background-color:rgba(245, 0, 0, 0.5);" : "" ?>
                     <?= $articleborder ? "padding: 3vw;border-radius: 3vw;border: 1px solid #333;" : "" ?>
                     <?= $shadowcontain ? "background-color: rgb(247,247,247);" : "" ?>
                    ">
+<?php if (!$hidedots){ ?>
     <div class="dotsdropdown" tabindex="0" role="button" onmousedown="var tthis = this;if (tthis.matches(':focus')){setTimeout(()=>{tthis.blur()}, 1)};"> 
         <div class="dots">
             <div class="dot"></div>
@@ -36,7 +38,7 @@
             <div class="lowercut"></div>
 
         </div>
-    </div>
+    </div> <?php } ?>
     <?php if ($shadowcontain){ ?>
         <template>
             <link href="/cdn/tailwind.min.css" rel="stylesheet">
@@ -54,16 +56,17 @@
     <?php } ?>
     <div style=" <?= $shadowcontain ? "min-height:calc(90vh * 0.3);" : "" ?> ">
         <h5 class="text-center hover:underline "><a href='/articulo/<?= $content['p_id'].($content['t_replaced_at'] ? "/historia/" . $content['t_id']  : "") ?>' class="hover:text-gray-900"><?= $title ? $content['p_title'] : "" ?></a></h1>
-        <style><?= $content['t_css'] ?></style>
+        <?php if ($shadowcontain || $displayas=="snippet" ){ ?>  <style><?= $content['t_css'] ?></style> <?php } ?>
         <?php if ($dates){ ?>
             <span class="text-center text-neutral-500 leading-3	" style="font-size:0.6em;"> 
-                Fecha: <?= $content['p_created_at'] ?>  |  
+                Fecha: <?= $content['p_created_at'] ?>    
+<?php if ($dates>0){ ?>|                
                 Modificado: <?= $content['t_created_at'] ?>
                 <?= $content['t_replaced_at'] ? "| Reemplazado:  ${content['t_replaced_at']}" : "" ?>
                 <?= $content['p_deleted_at'] ? "| Borrado:  ${content['p_deleted_at']}" : "" ?>
                 <?= $content['p_end_date'] ? "| Termina/o el:  ${content['p_end_date']}" : "" ?>
                 <?= $showauthor ? "| Editado por:  ${content['u_name']}" : "" ?>
-
+<?php } ?>                
             </span>
             <br>
         <?php } ?>
@@ -98,7 +101,7 @@
             </div>
             </div>
         <?php } ?>
-        <div class="content <?=$votephase ? "pt-3":""?>">
+        <div class="content <?=$votephase ? "pt-3":""?>" <?=$votephase ? "style='min-height:100px;'":""?>>
         <?= $content['t_content'] ?>
         </div>
     </div>

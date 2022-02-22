@@ -23,6 +23,61 @@
 <div style="height: 70vh;width:100vw;">
 
 </div>
+<div class="flex gap-2 flex-column w-full">
+    <div class="flex justify-evenly flax-wrap flex-row postrow">
+        <div class="mt-1 w-2/5 h-full min-w-min overflow-hidden indpost">
+            <?php $nxtarticle($entries) ?>
+        </div>
+        <div class="mt-1 w-1/5 h-full min-w-min overflow-hidden  indpost">
+            <?php $nxtarticle($entries, 200) ?>
+        </div> 
+        <div class="w-1/5 gap-1 h-full flex flex-column">
+            <div class="mt-1 w-full h-full overflow-hidden  indpost">
+                <?php $nxtarticle($entries, 70) ?>
+            </div>
+            <div class="mt-1 w-full h-full overflow-hidden  indpost">
+                <?php $nxtarticle($entries, 70) ?>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-evenly flax-wrap flex-row postrow">
+        <div class="w-1/5 gap-1 h-full flex flex-column">
+            <div class="mt-1 w-full h-full overflow-hidden  indpost">
+                <?php $nxtarticle($entries, 70) ?>
+            </div>
+            <div class="mt-1 w-full h-full overflow-hidden  indpost">
+                <?php $nxtarticle($entries, 70) ?>
+            </div>
+        </div>    
+    
+        <div class="mt-1 w-1/5 h-full min-w-min overflow-hidden  indpost">
+            <?php $nxtarticle($entries, 200) ?>
+        </div> 
+        
+        <div class="mt-1 w-2/5 h-full min-w-min overflow-hidden indpost">
+            <?php $nxtarticle($entries, ) ?>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div class="flex justify-evenly flax-wrap flex-row postrow">
+        <div class="mt-1 w-1/5 h-full min-w-min overflow-hidden  indpost">
+            <?php $nxtarticle($sccentries, 200) ?>
+        </div>     
+        <div class="mt-1 w-1/5 h-full min-w-min overflow-hidden  indpost">
+            <?php $nxtarticle($sccentries, 200) ?>
+        </div> 
+        <div class="mt-1 w-1/5 h-full min-w-min overflow-hidden  indpost">
+            <?php $nxtarticle($sccentries, 200) ?>
+        </div> 
+        
+        <div class="mt-1 w-1/5 h-full min-w-min overflow-hidden  indpost">
+            <?php $nxtarticle($sccentries, 200) ?>
+        </div> 
+    </div>
+
+</div>
 <style>
 
 .header {
@@ -38,7 +93,7 @@
 	  linear-gradient(to right bottom, rgba(32, 44, 150, 0.8 ), rgba(53, 38, 137, 0.8)),
      url('/img/school.webp');
     background-size:100px 100px, 100px 100px, 25px 25px, 25px 25px, cover, cover;
-    background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px, center, center;  	
+    background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px, top, top;  	
   	position: absolute;
   	clip-path: polygon(0 0, 100vw 0, 100vw 100%, 0 65vh);
 }
@@ -54,6 +109,16 @@
     .header{
         clip-path: polygon(0 0, 100vw 0, 100vw 100%, 0 70vh);
     }
+    .postrow{
+        flex-direction: column !important;
+        margin-left: 5vw;
+        width:90vw
+    }
+    .indpost{
+        width:90vw
+
+    }
+    
 }
     </style>
 

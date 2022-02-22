@@ -11,6 +11,7 @@ if (isset($feedany)){
     } else {
         $feedname = $feedany;
     }
+    $nomain=true;
 }
 
 if (isset($feedname)){

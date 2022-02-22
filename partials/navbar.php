@@ -104,7 +104,7 @@
         <?php } ?>
       </ul>
       <form class="d-flex" action="/busqueda">
-        <input class="form-control bg-white/10 focus:bg-white/25 me-2 <?= $hashero ? "text-white" : "" ?>" name="q" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control bg-white/10 focus:bg-white/25 me-2 <?= $hashero ? "text-white placeholder:text-gray-100" : "" ?>" name="q" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>

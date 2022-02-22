@@ -1,3 +1,6 @@
+<br>
+<hr>
+<br>
 <footer>
     <div class="social-media-links">
       <ul class="ul-footer">

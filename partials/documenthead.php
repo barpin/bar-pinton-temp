@@ -25,20 +25,15 @@
     
     */ ?>
 
-    <link href="/css/main.css?version=<?= $ver ?>" rel="stylesheet">
     <link href="/css/footer.css?version=<?= $ver ?>" rel="stylesheet">
+    <?php if (isset ($jsvars)){ ?>
     <script id="vars">
-        <?php
-        if (isset ($jsvars)){
-            foreach($jsvars as $varname=>$varval){
-                ?>
+        <?php foreach($jsvars as $varname=>$varval){ ?>
         var <?= $varname ?> = <?= is_numeric($varval) ? $varval : ( is_array($varval) ? '`'.str_replace("`", "\`",addslashes(json_encode($varval))).'`' : '`'.str_replace("`", "\`",addslashes($varval)).'`' ) ?>;
-                <?php
-            }
-        }
-        ?>
+        <?php } ?>
         console.log("variables from php loaded");
     </script>
+    <?php } ?>
     <?= $headertags ?? "" ?>
 
     <script>
@@ -52,3 +47,4 @@
     </script>
 </head>
 <body>
+<link href="/css/main.css?version=<?= $ver ?>" rel="stylesheet"> <?php //esto tiene que estar aca porque el cdn de tailwind si no mete su css despues ?>

@@ -21,12 +21,13 @@ $hsnippet=false;
 $shadowcontain=false;
 $shortenstrip=false;
 $showversion=0;
-
+$hidedots=0;
+$crop=0;
 
 $content['t_content']=isset($content['t_content']) ? htmlspecialchars_decode($content['t_content']):null;
 $content['t_css']=isset($content['t_css']) ? htmlspecialchars_decode($content['t_css']): null;
 
-include_once 'assets/replacehtml_css.php';
+include 'assets/replacehtml_css.php';
 
 while ($content['t_content']!=($tempcontent=htmlspecialchars_decode(preg_replace_callback("/<!--HTML:(.*)-->/mi", $replacehtml, $content['t_content'])))){
     $content['t_content']=$tempcontent;
@@ -65,7 +66,9 @@ if ($displayas=="fullpage"){
             break;
     }
 } else if ($displayas=="infeed") {
+    $crop=1;
     $articleborder=1;
+    $sniplen=10000;
     switch ($category){
         case 4: //post
             break;
@@ -78,6 +81,8 @@ if ($displayas=="fullpage"){
             break;
     }
 } else if ($displayas=="inhist") {
+    $sniplen=10000;
+    $crop=1;
     $showauthor=1;
     $margins=1;
     $articleborder=1;
@@ -97,10 +102,10 @@ if ($displayas=="fullpage"){
             break;
     }
 } else if ($displayas=="snippet") {
-    $snippetdirection="vertical";
-    $vsnippet=true;
-    $shadowcontain=true;
-    $shortenstrip=true;
+    $crop=1;
+    $dates=-1;
+$hidedots=1;
+$shortenstrip=true;
 
     switch ($category){
         case 4: //post
@@ -131,7 +136,14 @@ if ($displayas=="fullpage"){
             break;
     }
 }
-
+if ($crop){
+    $sniplen=$sniplen ?? 400;
+    if ($category==0b10000){
+        $sniplen-=50;
+    }
+    $snippetviable=htmlspecialchars_decode( strip_tags($content['t_content']));
+    $content['t_content']=mb_substr($snippetviable,0,$sniplen).(mb_substr($snippetviable,$sniplen) ? "...<br><a href='/articulo/${content['p_id']}".($content['t_replaced_at'] ? "/historia/" . $content['t_id']  : "")."' class='text-blue-600 hover:underline'>Ver mas</a>" : "");
+}
 if ($category==16){
     $voteoptions=json_decode($content['p_options']);
     if (new dateTime($content['p_end_date']) < new dateTime() || !$loggedin){
