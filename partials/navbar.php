@@ -1,8 +1,15 @@
-<?php include_once 'assets/database.php'; ?>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<?php include_once 'assets/database.php';$hashero=$hashero??false; ?>
+  
+
+<nav class="navbar navbar-expand-lg <?= $hashero ? "navbar-dark" : "navbar-light" ?> bg-faded shadow-5-strong">
   <div class="container-fluid">
     <a href="/" style="height:50px;width:50px;margin-right:10px;">
+    <picture>
+      <source srcset="/img/school_logo.webp" type="image/webp">
+      <source srcset="/img/school_logo.png" type="image/png"> 
       <img src="/img/school_logo.png" alt="Logo">
+    </picture>
+      
     </a>
     <a class="navbar-brand" href="/">C.E.C.S.</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +104,7 @@
         <?php } ?>
       </ul>
       <form class="d-flex" action="/busqueda">
-        <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control bg-white/10 focus:bg-white/25 me-2 <?= $hashero ? "text-white" : "" ?>" name="q" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>

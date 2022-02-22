@@ -7,7 +7,7 @@
     <title><?= $title ?? "Centro de estudiantes de la Confederacion Suiza" ?></title>
     <link href="/cdn/bootstrap.min.css" rel="stylesheet">
     <script src="/cdn/bootstrap.bundle.min.js" ></script>
-    <link href="/cdn/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="/cdn/sweetalert2@11.js" defer></script>
     <link rel="icon" href="/favicon.ico" type="image/ico">
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
