@@ -69,7 +69,7 @@ include('api/feed.php');
 $apijson = ob_get_contents();
 ob_end_clean();
 
-$posts=json_decode($apijson);
+$posts=json_decode($apijson) ?? [];
 $templatequery=$posts_data_query."WHERE posts.id =  ";
 $querylist=[];
 foreach ($posts as $ipost){

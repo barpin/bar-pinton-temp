@@ -36,11 +36,11 @@ while ($content['t_content']!=($tempcontent=htmlspecialchars_decode(preg_replace
 
 
 
-while ($content['t_css']!=($tempcss=htmlspecialchars_decode(preg_replace_callback("/\/\*CSS:(.*)\*\//mi", $replacecss, $content['t_css'])))){
+while ($content['t_css']!=($tempcss=htmlspecialchars_decode(preg_replace_callback("/\/\*CSS:(.*)\*\//mi", $replacecss, ($content['t_css'] ?? ""))))){
     $content['t_css']=$tempcss;
 }
 
-if (empty(array_diff( str_split($content['t_css']), str_split("/*CSS:DEFAULT*/")))){
+if (empty(array_diff( (str_split($content['t_css']) ?? ""), str_split("/*CSS:DEFAULT*/")))){
     $content['t_css']=file_get_contents('css/default_article.css');
 }
 

@@ -18,7 +18,7 @@ if (isset($_POST['id'])){
   if (isset($_POST['delete'])){
     $query= "DELETE FROM users WHERE id = ${_POST['id']} AND password IS NULL";
     $result=qq($query, "500 Internal Server Error");
-    assertExitCode( $result , "400 Bad Request");
+    assertExitCode( !$result , "400 Bad Request");
 
     echo $_POST['id'];
   } else {
