@@ -56,7 +56,7 @@
     <?php } ?>
     <div style=" <?= $shadowcontain ? "min-height:calc(90vh * 0.3);" : "" ?> ">
         <h5 class="text-center hover:underline "><a href='/articulo/<?= $content['p_id'].($content['t_replaced_at'] ? "/historia/" . $content['t_id']  : "") ?>' class="hover:text-gray-900"><?= $title ? $content['p_title'] : "" ?></a></h1>
-        <?php if ($shadowcontain || $displayas=="snippet" ){ ?>  <style><?= $content['t_css'] ?></style> <?php } ?>
+        <?php if (!($shadowcontain || $displayas=="snippet") ){ ?>  <style><?= $content['t_css'] ?></style> <?php } ?>
         <?php if ($dates){ ?>
             <span class="text-center text-neutral-500 leading-3	" style="font-size:0.6em;"> 
                 Fecha: <?= $content['p_created_at'] ?>    
