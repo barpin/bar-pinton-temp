@@ -246,10 +246,11 @@ if ($shadowcontain){
                 $offset=$originaloffset;
                 $tbcarr=[mb_substr($tempcontent2,0,$offset)." ... "];
                 $subcounter=0;
+				
                 while (($tpos=mb_stripos_any($subqueries, $tempcontent2,$offset))[0] && $subcounter++<6){
                     $subsnippetlength=(($snippetlength-$originaloffset-mb_strlen(array_reduce(array_slice($submatches,0,$wordsaccounted), fn ($x,$y)=>$x.$y[1],"") ) )/$wordsaccounted/2 );
-                    $startat=max($offset,$tpos[0]-$subsnippetlength);
-                    $combinedlength=$subsnippetlength*2+mb_strlen($tpos[1]);
+                    $startat=intval(max($offset,$tpos[0]-$subsnippetlength)); //sometimes offset becomes a float. this seems to fix it. theres probably some data loss oh well.
+                    $combinedlength=intval($subsnippetlength*2+mb_strlen($tpos[1]));
                     $tbcarr[]=mb_substr($tempcontent2, $startat,$combinedlength )." ... ";
                     $offset=$startat+$combinedlength+5;
                 }
