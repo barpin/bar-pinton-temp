@@ -152,7 +152,7 @@ $whereclause.=$rankquery[1];
 //no more inline ifs this is hard enough to read on its own.
 $query="SET @temptext :='';";
 qq($query, "500 Internal Server Error");
-$query="SELECT ". ( debug ? getcols() : " posts.id  ");
+$query="SELECT ". ( debug ? getcols() : " posts.id as p_id ");
 if ($searchquery){
   $query .= " , ".$sumquery ;
 }
