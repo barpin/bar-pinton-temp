@@ -1,5 +1,5 @@
 <?php
-define('debug', true);
+define('debug', false);
 
 require_once("{$_SERVER['DOCUMENT_ROOT']}/router.php");
 

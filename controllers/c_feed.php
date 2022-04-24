@@ -4,6 +4,7 @@ include 'assets/ver.php';
 require_once 'assets/database.php';
 $headertags="<link href='/css/feed.css?version=${ver}' rel='stylesheet'><script src='/js/dropdownfuncs.js?version=${ver}' defer></script>";
 $archive= isset($archive) ? $archive : false;
+$allow= isset($allow) ? $allow : true;
 
 if (isset($feedany)){
     if (ctype_digit($feedany)){
