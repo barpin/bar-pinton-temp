@@ -1,13 +1,7 @@
 <header class="header">
     <div class="flex flex-column items-center justify-center w-full h-full">
         <div class="flex gap-5" style="transform: translateY(5%);">
-            <picture class="h-24 w-24 lg:h-52 lg:w-52">
-                <source srcset="/img/logoblanco.webp" type="image/webp">
-                <source srcset="/img/logoblanco.png" type="image/png"> 
-                <img src="/img/logoblanco.png" alt="Logo">
-            </picture>
             <picture class="h-32 w-32 lg:h-64 lg:w-64" style="transform:translatey(-17%)">
-                <source srcset="/img/suizablanco.webp" type="image/webp">
                 <source srcset="/img/suizablanco.png" type="image/png"> 
                 <img src="/img/suizablanco.png" alt="Logo">
             </picture>
@@ -85,13 +79,7 @@
     z-index:-1;
   	height: 80vh;
     width:100vw;
-  	background-image: 
-      linear-gradient(rgba(255,255,255,.3) 2px, transparent 2px),
-        linear-gradient(90deg, rgba(255,255,255,.3) 2px, transparent 2px),
-        linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px),
-	  linear-gradient(to right bottom, rgba(32, 44, 150, 0.8 ), rgba(53, 38, 137, 0.8)),
-     url('/img/school.webp');
+  	background-image:url('/img/fdo-quinto-lores.jpg');
     background-size:100px 100px, 100px 100px, 25px 25px, 25px 25px, cover, cover;
     background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px, top, top;  	
   	position: absolute;
