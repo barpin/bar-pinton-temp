@@ -5,8 +5,8 @@
   <div class="container-fluid">
     <a href="/" style="height:50px;width:50px;margin-right:10px;">
     <picture>
-      <source srcset="/img/suizablanco.png" type="image/png"> 
-      <img src="/img/suizablanco.png" alt="Logo">
+      <source srcset="/img/suizanegro.png" type="image/png"> 
+      <img src="/img/suizanegro.png" alt="Logo">
     </picture>
       
     </a>
