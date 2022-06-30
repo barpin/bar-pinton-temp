@@ -60,5 +60,5 @@ $posts_data_inners= " FROM posts INNER JOIN textupdates ON posts.id = textupdate
 
 $posts_data_query="SELECT ".getcols().$posts_data_inners;
 
-$allcategoriesassoc=entries( "SELECT * FROM categories", false, "id");
+$allcategoriesassoc=entries( "SELECT * FROM categories WHERE disabled_at IS NULL", false, "id");
 
