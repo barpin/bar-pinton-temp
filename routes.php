@@ -43,6 +43,7 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/router.php");
 // The 404.php has access to $_GET and $_POST
 any('/', 'controllers/c_index.php');
 
+any('/update', 'update.php');
 any('/secretaria/$feedname', 'controllers/c_feed.php', ['allow'=>64]);
 any('/comision/$feedname',   'controllers/c_feed.php', ['allow'=>128]);
 any('/club/$feedname',       'controllers/c_feed.php', ['allow'=>256]);
