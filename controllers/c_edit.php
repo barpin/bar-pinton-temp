@@ -107,7 +107,7 @@ if (isset($article)){
 
     $jsvars = ['isnew'=>1,];
     $new=1;
-    $permsdata=entries( "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) ");
+    $permsdata=entries( "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) AND deleted_at IS NULL");
 
 }
 //echo "SELECT * FROM categories WHERE POWER(2, id) & ${_SESSION['perms']} = POWER(2, id) OR id = 0";
