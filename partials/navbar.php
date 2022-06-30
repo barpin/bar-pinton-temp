@@ -16,6 +16,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <!--
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Informacion
@@ -33,13 +34,16 @@
 
           </ul>
         </li>
+-->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Novedades
+            Auxiliares
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item font-sans" href="/noticias">Noticias</a></li>
+               <!--
+            <li><a class="dropdown-item font-sans" href="/noticias">Importantes</a></li>
             <li><a class="dropdown-item font-sans" href="/todo">Todo</a></li>
+            -->
             <li><a class="dropdown-item font-sans" href="/reuniones">Reuniones de Delegados</a></li>
             <li><a class="dropdown-item font-sans" href="/elecciones">Elecciones</a></li>
 
@@ -50,7 +54,7 @@
             Secretarias
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item font-sans" href="/secretarias">Secretarias</a></li>
+            <li><a class="dropdown-item font-sans" href="/secretarias">Subsecretarias</a></li>
             <?php foreach ($allcategoriesassoc as $nsecretaria){ if ((gmp_init($nsecretaria['parents']) & 0b1000000) != 0 && (gmp_init($nsecretaria['parents']) & 0b1000000000) == 0){ ?>
               <li><a class="dropdown-item font-sans" href="/secretaria/<?= $nsecretaria['urlname'] ?>"><?= $nsecretaria['name'] ?></a></li>
             <?php } } ?>
@@ -58,7 +62,7 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Comisiones
+            Recursos
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item font-sans" href="/comisiones">Comisiones</a></li>
@@ -69,10 +73,10 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle font-sans" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Clubes
+            Clientes
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item font-sans" href="/clubes">Clubes</a></li>
+            <li><a class="dropdown-item font-sans" href="/clubes">Clientes</a></li>
             <?php foreach ($allcategoriesassoc as $nclub){ if ((gmp_init($nclub['parents']) & 0b100000000) != 0){ ?>
               <li><a class="dropdown-item font-sans" href="/club/<?= $nclub['urlname'] ?>"><?= $nclub['name'] ?></a></li>
             <?php } } ?>
