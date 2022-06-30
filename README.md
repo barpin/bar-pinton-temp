@@ -1,5 +1,4 @@
-# Sitio Web del Centro de estudiantes de la confederacion suiza
-
+# Sitio Web del Bar pinton
 Probado con Apache 2.4.51, php 7.4.25, y mariadb 10.5.12
 
 Requiere de las extensiones de php `gmp` y `mysqli`. En xampp ya vienen activadas.
