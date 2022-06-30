@@ -10,7 +10,7 @@
     </picture>
       
     </a>
-    <a class="navbar-brand" href="/">C.E.C.S.</a>
+    <a class="navbar-brand" href="/">Bar Pintón</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -51,7 +51,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item font-sans" href="/secretarias">Secretarias</a></li>
-            <?php foreach ($allcategoriesassoc as $nsecretaria){ if ((gmp_init($nsecretaria['parents']) & 0b1000000) != 0){ ?>
+            <?php foreach ($allcategoriesassoc as $nsecretaria){ if ((gmp_init($nsecretaria['parents']) & 0b1000000) != 0 && (gmp_init($nsecretaria['parents']) & 0b1000000000) == 0){ ?>
               <li><a class="dropdown-item font-sans" href="/secretaria/<?= $nsecretaria['urlname'] ?>"><?= $nsecretaria['name'] ?></a></li>
             <?php } } ?>
           </ul>
