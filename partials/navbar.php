@@ -5,9 +5,8 @@
   <div class="container-fluid">
     <a href="/" style="height:50px;width:50px;margin-right:10px;">
     <picture>
-      <source srcset="/img/school_logo.webp" type="image/webp">
-      <source srcset="/img/school_logo.png" type="image/png"> 
-      <img src="/img/school_logo.png" alt="Logo">
+      <source srcset="/img/suizablanco.png" type="image/png"> 
+      <img src="/img/suizablanco.png" alt="Logo">
     </picture>
       
     </a>

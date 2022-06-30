@@ -6,12 +6,7 @@
                 <img src="/img/suizablanco.png" alt="Logo">
             </picture>
         </div>
-        <div style="transform:translateY(-20%);" class="navbartexts flex flex-column items-center justify-center">
-            <span class="text-3xl lg:text-5xl text-white">CENTRO DE</span>
-            <span class="text-3xl lg:text-5xl text-white">ESTUDIANTES</span>
-            <span class="text-xl text-white">ESCUELA TECNICA N 26</span>
-            <span class="text-xl text-white">"CONFEDERACION SUIZA"</span>
-        </div>
+
     </div>
 </header> 
 <div style="height: 70vh;width:100vw;">
