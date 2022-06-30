@@ -40,13 +40,13 @@
             Auxiliares
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-               <!--
+               
             <li><a class="dropdown-item font-sans" href="/noticias">Importantes</a></li>
             <li><a class="dropdown-item font-sans" href="/todo">Todo</a></li>
-            -->
+            <!--
             <li><a class="dropdown-item font-sans" href="/reuniones">Reuniones de Delegados</a></li>
             <li><a class="dropdown-item font-sans" href="/elecciones">Elecciones</a></li>
-
+-->
           </ul>
         </li>
         <li class="nav-item dropdown">
