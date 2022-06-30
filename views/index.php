@@ -75,8 +75,8 @@
   	height: 80vh;
     width:100vw;
   	background-image:url('/img/fdo-quinto-lores.jpg');
-    background-size:100px 100px, 100px 100px, 25px 25px, 25px 25px, cover, cover;
-    background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px, top, top;  	
+    background-size: cover;
+    background-position: top;  	
   	position: absolute;
   	clip-path: polygon(0 0, 100vw 0, 100vw 100%, 0 65vh);
 }
