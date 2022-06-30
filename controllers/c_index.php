@@ -27,7 +27,7 @@ usort($entries1, fn($y, $x)=>$y);
 usort($entries2, fn($x)=>mb_strlen($x['t_content']));
 $entries=array_merge($entries1, $entries2);
 
-$sccentries=entries($posts_data_query."WHERE textupdates.replaced_at IS NULL AND ( posts.category & 56 ) != 0 AND ( posts.category & 2 ) = 0 AND ( posts.category & 448 ) != 0 AND deleted_at IS NULL");
+$sccentries=entries($posts_data_query."WHERE textupdates.replaced_at IS NULL AND ( posts.category & 56 ) != 0 AND ( posts.category & 2 ) = 0 AND ( posts.category & 448 ) != 0 AND posts.deleted_at IS NULL");
 
 $nxtarticle = function (&$entries, $sniplen=400) use ($loggedin, $displayas, $allcategoriesassoc){
   if ($content=current($entries)){
